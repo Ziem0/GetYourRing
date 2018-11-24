@@ -8,17 +8,15 @@ import lombok.extern.slf4j.Slf4j;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.List;
 
 @Slf4j
 @Entity
 @Getter
 @Setter
-public class User {
+public class Owner {
 
-	@Id
 	@Column(unique = true,nullable = false)
+	@Id
 	private String nick;
 
 	@Column(nullable = false)
@@ -27,19 +25,13 @@ public class User {
 	@Column(unique = true,nullable = false)
 	private String email;
 
-	@OneToMany(targetEntity = Ring.class, mappedBy = "user")
-	private List<Ring> rings;
-
-	public User() {
+	public Owner() {
 	}
 
-	public User(String nick, String password, String email, List<Ring> rings) {
+	public Owner(String nick, String password, String email) {
 		this.nick = nick;
 		this.password = password;
 		this.email = email;
-		this.rings = rings;
 	}
-
-
 
 }

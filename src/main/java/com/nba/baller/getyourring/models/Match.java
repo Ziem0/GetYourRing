@@ -23,11 +23,9 @@ public class Match {
 	private Date date;
 
 	@OneToOne
-	@Column(nullable = false)
 	private Team teamOne;
 
 	@OneToOne
-	@Column(nullable = false)
 	private Team teamTwo;
 
 	@Column(nullable = false)

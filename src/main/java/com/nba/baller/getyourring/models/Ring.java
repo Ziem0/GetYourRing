@@ -23,21 +23,19 @@ public class Ring {
 	private Date date;
 
 	@OneToOne
-	@Column(nullable = false)
 	private Match match;
 
 	@ManyToOne
-	@Column(nullable = false)
-	private User user;
+	private Owner owner;
 
 
 	public Ring() {
 	}
 
-	public Ring(Date date, Match match, User user) {
+	public Ring(Date date, Match match, Owner owner) {
 		this.date = date;
 		this.match = match;
-		this.user = user;
+		this.owner = owner;
 	}
 }
 
