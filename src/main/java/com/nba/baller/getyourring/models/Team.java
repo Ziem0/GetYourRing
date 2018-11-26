@@ -41,6 +41,17 @@ public class Team {
 	public Team() {
 	}
 
+	public Team(String name, Hall hall, City city, Coach coach, Owner user) {
+		this.name = name;
+		this.hall = hall;
+		this.city = city;
+		this.coach = coach;
+		this.user = user;
+		this.hasOwner = user != null;
+		this.wins = 0;
+		this.plusMinus = 0;
+	}
+
 	public Team(String name, Hall hall, City city, Coach coach, Owner user, Integer wins, Integer plusMinus) {
 		this.name = name;
 		this.hall = hall;

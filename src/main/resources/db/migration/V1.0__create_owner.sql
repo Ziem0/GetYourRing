@@ -1,0 +1,5 @@
+--create table if not exists owner(
+--    id varchar(255) unique primary key,
+--    password varchar(255),
+--    email text
+--);
