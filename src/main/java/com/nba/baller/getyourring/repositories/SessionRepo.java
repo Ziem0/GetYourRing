@@ -10,5 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface SessionRepo extends CrudRepository<GameSession, String> {
 
 	@Query(value = "select s from GameSession s where s.sessionId = :deliveredSessionId")
-	GameSession checkIfLogged(@Param("deliveredSessionId")String deliveredSessionId);
+	GameSession getSessionBySessionId(@Param("deliveredSessionId")String deliveredSessionId);
+
+
 }

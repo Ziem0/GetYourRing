@@ -1,6 +1,7 @@
-package com.nba.baller.getyourring.models;
+package com.nba.baller.getyourring.models.game;
 
 
+import com.nba.baller.getyourring.models.Owner;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,6 @@ public class Ring {
 
 	@ManyToOne
 	private Owner owner;
-
 
 	public Ring() {
 	}

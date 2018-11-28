@@ -1,4 +1,4 @@
-package com.nba.baller.getyourring.models;
+package com.nba.baller.getyourring.models.game;
 
 
 import lombok.Getter;

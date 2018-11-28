@@ -1,0 +1,22 @@
+<!--referal to create new account-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>logging</title>
+</head>
+<body>
+
+<h1>login page</h1>
+<h2 th:if="${message}=='ok'">Lets log in</h2>
+<h2 th:unless="${message}=='ok'">Incorrect login or password! Try again</h2>
+
+<form method="post" action="#" th:action="@{/login}" th:object="${owner}">
+    <input type="text" name="username" th:field="*{username}">
+    <input type="password" name="password" th:field="*{password}">
+    <input type="submit" value="login">
+</form>
+
+</body>
+</html>

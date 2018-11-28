@@ -1,9 +1,11 @@
 package com.nba.baller.getyourring.models;
 
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,10 +19,13 @@ public class Owner {
 
 	@Column(unique = true,nullable = false)
 	@Id
-	private String nick;
+	private String username;
 
 	@Column(nullable = false)
 	private String password;
+
+	@Column(nullable = false)
+	private Boolean enabled = true;
 
 	@Column(unique = true,nullable = false)
 	private String email;
@@ -28,10 +33,20 @@ public class Owner {
 	public Owner() {
 	}
 
-	public Owner(String nick, String password, String email) {
-		this.nick = nick;
-		this.password = password;
+	public Owner(String username, String password,  String email) {
+		this.username = username;
+		this.password = passwordEncoder().encode(password);
 		this.email = email;
+	}
+
+	public void setEncodedPassword() {
+		String encodedPassword = this.passwordEncoder().encode(this.getPassword());
+		this.password = encodedPassword;
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 
 }

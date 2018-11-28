@@ -12,4 +12,6 @@ public class AdminRestController {
 		//json with all owners
 		return "owners";   //switch on html
 	}
+
+	//different values methods
 }

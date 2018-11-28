@@ -1,5 +1,6 @@
-package com.nba.baller.getyourring.models;
+package com.nba.baller.getyourring.models.game;
 
+import com.nba.baller.getyourring.models.Owner;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -29,9 +30,9 @@ public class Team {
 	private Coach coach;
 
 	@OneToOne
-	private Owner user;
+	private Owner owner;
 
-	private boolean hasOwner;
+	private boolean controlledByPlayer;
 
 	private Integer wins;
 
@@ -41,24 +42,24 @@ public class Team {
 	public Team() {
 	}
 
-	public Team(String name, Hall hall, City city, Coach coach, Owner user) {
+	public Team(String name, Hall hall, City city, Coach coach, Owner owner, Boolean controlledByPlayer) {
 		this.name = name;
 		this.hall = hall;
 		this.city = city;
 		this.coach = coach;
-		this.user = user;
-		this.hasOwner = user != null;
+		this.owner = owner;
+		this.controlledByPlayer = controlledByPlayer;
 		this.wins = 0;
 		this.plusMinus = 0;
 	}
 
-	public Team(String name, Hall hall, City city, Coach coach, Owner user, Integer wins, Integer plusMinus) {
+	public Team(String name, Hall hall, City city, Coach coach, Owner owner, Boolean controlledByPlayer, Integer wins, Integer plusMinus) {
 		this.name = name;
 		this.hall = hall;
 		this.city = city;
 		this.coach = coach;
-		this.user = user;
-		this.hasOwner = user != null;
+		this.owner = owner;
+		this.controlledByPlayer = controlledByPlayer;
 		this.wins = wins;
 		this.plusMinus = plusMinus;
 	}

@@ -1,4 +1,4 @@
-package com.nba.baller.getyourring.models;
+package com.nba.baller.getyourring.models.game;
 
 
 import com.nba.baller.getyourring.helpers.Position;

@@ -21,15 +21,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//		auth
+//				.inMemoryAuthentication()
+//				.withUser("ziemo")
+//				.password(passwordEncoder().encode("1212"))
+//				.roles("ADMIN")
+//				.and()
+//				.withUser("ania")
+//				.password(passwordEncoder().encode("1212"))
+//				.roles("USER");
+
 		auth
-				.inMemoryAuthentication()
-				.withUser("ziemo")
-				.password(passwordEncoder().encode("1212"))
-				.roles("ADMIN")
-				.and()
-				.withUser("ania")
-				.password(passwordEncoder().encode("1212"))
-				.roles("USER");
+				.jdbcAuthentication()
+				.dataSource(dataSource)
+				.usersByUsernameQuery("select username, password, enabled from owner where username=?")
+				.passwordEncoder(passwordEncoder())
+				.authoritiesByUsernameQuery("select owner_username, role from roles where owner_username=?");
 	}
 
 	@Override
@@ -37,24 +44,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 				.csrf().disable()
 				.authorizeRequests()
-				.antMatchers("/start")
+				.antMatchers("/home")
 					.permitAll()
 				.antMatchers("/admin")
 					.hasRole("ADMIN")
 				.antMatchers("/game")
 					.hasRole("USER")
-				.antMatchers("/start")
-					.anonymous()
+//				.antMatchers("/home")
+//					.anonymous()  --> don't let to open home page when being logged
 				.anyRequest()
 					.permitAll()
 				.and()
 				.formLogin()
-//					.loginPage("/login")
+					.loginPage("/login")
 				.and()
 				.logout()
 					.logoutUrl("/logout")
 					.logoutSuccessUrl("/home")
-					.invalidateHttpSession(true)
+					.invalidateHttpSession(true)    //!!!
 					.deleteCookies("JSESSIONID")
 				.and()
 				.rememberMe()
@@ -62,7 +69,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	protected PasswordEncoder passwordEncoder() {
+	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
 }
