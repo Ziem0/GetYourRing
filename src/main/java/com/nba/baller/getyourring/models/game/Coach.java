@@ -1,6 +1,7 @@
 package com.nba.baller.getyourring.models.game;
 
 
+import com.nba.baller.getyourring.helpers.Position;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +35,11 @@ public class Coach {
 		return new Random().nextBoolean();
 	}
 
-
+	private Position getRandomPosition() {
+		Position[] positions = Position.values();
+		int i = new Random().nextInt(6 - 1) + 1;
+		return positions[i];
+	}
 
 
 }

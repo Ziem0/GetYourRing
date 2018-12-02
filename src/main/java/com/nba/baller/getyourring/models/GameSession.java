@@ -17,19 +17,19 @@ public class GameSession {
 
 	@Id
 	@Column(name = "primary_id")
-	public String id;
+	private String id;
 	@Column(name = "session_id")
-	public String sessionId;
+	private String sessionId;
 	@Column(name = "creation_time")
-	public BigInteger creationTime;
+	private BigInteger creationTime;
 	@Column(name = "last_access_time")
-	public BigInteger lastAccessTime;
+	private BigInteger lastAccessTime;
 	@Column(name = "max_inactive_interval")
-	public Integer maxInactiveInterval;
+	private Integer maxInactiveInterval;
 	@Column(name = "expiry_time")
-	public BigInteger expiryTime;
+	private BigInteger expiryTime;
 	@Column(name = "principal_name")
-	public String user;
+	private String user;
 
 	public GameSession() {
 	}

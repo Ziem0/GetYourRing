@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>intro</title>
+</head>
+<body>
+
+<h1>intro page</h1>
+
+<div>
+    This is my first online game.
+    So please be aware that it might be not bugs-free.
+
+    But lets talk about game.
+    You have a chance to become an NBA team's owner.
+    Your goals is to win championship based on match results and trades.
+    The game is half-roguelike half-manager.
+    So you have a real influence on the fate but keep in mind there are a few things you can't control!
+
+    Rules:
+    League contains 5 teams with 5 players and coach.
+    Each player has an overall(1-5), changing after each game in the season (+-1).
+
+    After each game you can trade one player.
+    Trades are based on player's position and the contract's value (3-10 mln $)
+    Trade is allowed when:
+        -players have the same position
+        -difference between players' contracts is max 3 mln $
+    If you obtain player with lower contract then his overall will be reduced based on difference between traded players' contracts.
+    If you obtain player with higher contract then his overall will be increased based on difference between traded players' contracts.
+    Bear in mind that max overall is 5 and min 1.
+
+    Coach has one special ability. He changes overall for specified position (+-1).
+    The position is randomly changed after each game.
+
+    The match consists of five mini battles based on players' positions and their overall.
+    During each mini battle every overall is multiplied by 6.
+    For example:
+    PGs 1 - 3 gives 6 - 18
+    SGs 2 - 5 gives 12 - 30
+    ..
+    =======================
+    summary         78 - 90
+
+    The difference in score during each mini battle higher than 6
+    activates a crowd factor which means a random team will get a random amount of points (6-12)
+
+    That's all!
+</div>
+<p th:text="${isOwnerNew}"></p>
+<div th:if="${isOwnerNew} == true">
+    <tr th:each="team : ${teams}">
+        <form method="post" action="#" th:action="@{/game/intro}">
+            <td th:text="${team}"></td>
+            <input type="text" name="team" th:value="${team}" hidden>
+            <button type="submit">pick this team</button>
+            <br>
+        </form>
+    </tr>
+</div>
+
+<div th:unless="${isOwnerNew} == true">
+    <a href="/game/team">Let's start game!</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>intro</title>
+</head>
+<body>
+
+<h1>team page</h1>
+
+<a href="/game/trade">trade</a>
+<a href="/game/table">table</a>
+<a href="/game/matches">match</a>
+
+<tr th:each="player : ${players}">
+    <td th:text="${player.getName()}">name</td>
+    <td th:text="${player.getOverall()}">overall</td>
+    <td th:text="${player.getContractValue()}">contract</td>
+    <br>
+</tr>
+
+<tr>
+    <td th:text="${coach.getName()}" ></td>
+    <td th:text="${coach.getSpecialValueForPosition()}" ></td>
+</tr>
+
+<p th:text="${city}"></p>
+<p th:text="${hall}"></p>
+<p th:text="${wins}"></p>
+<p th:text="${balance}"></p>
+
+<form name="logoutForm" th:action="@{/logout}" method="post">
+<input type="submit" value="Sign Out"/>
+</form>
+
+</body>
+</html>

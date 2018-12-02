@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.util.LinkedList;
+import java.util.List;
 
 @Slf4j
 @Entity
@@ -38,22 +40,25 @@ public class Team {
 
 	private Integer plusMinus;
 
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<Team> leftOpponents;
 
 	public Team() {
 	}
 
-	public Team(String name, Hall hall, City city, Coach coach, Owner owner, Boolean controlledByPlayer) {
+	public Team(String name, Hall hall, City city, Coach coach, Owner owner) {
 		this.name = name;
 		this.hall = hall;
 		this.city = city;
 		this.coach = coach;
 		this.owner = owner;
-		this.controlledByPlayer = controlledByPlayer;
+		this.controlledByPlayer = false;
 		this.wins = 0;
 		this.plusMinus = 0;
+		this.leftOpponents = new LinkedList<>();
 	}
 
-	public Team(String name, Hall hall, City city, Coach coach, Owner owner, Boolean controlledByPlayer, Integer wins, Integer plusMinus) {
+	public Team(String name, Hall hall, City city, Coach coach, Owner owner, Boolean controlledByPlayer, Integer wins, Integer plusMinus, List<Team> leftOpponents) {
 		this.name = name;
 		this.hall = hall;
 		this.city = city;
@@ -62,5 +67,6 @@ public class Team {
 		this.controlledByPlayer = controlledByPlayer;
 		this.wins = wins;
 		this.plusMinus = plusMinus;
+		this.leftOpponents = leftOpponents;
 	}
 }

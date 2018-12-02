@@ -5,7 +5,11 @@ import com.nba.baller.getyourring.models.Owner;
 import com.nba.baller.getyourring.models.game.*;
 import com.nba.baller.getyourring.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class GameService {
@@ -44,11 +48,32 @@ public class GameService {
 	}
 
 
-	public Iterable<Team> getTeamsByOwner(Owner owner) {
+	public List<Team> getTeamsByOwner(Owner owner) {
 		return teamRepo.getTeamsByOwner(owner);
 	}
 
-	//add all needed content for new player
+	public void updateUserTeam(Team userTeam) {
+		teamRepo.save(userTeam);
+	}
+
+	public List<Player> getPlayersByTeam(Team team) {
+		return playerRepo.getPlayersById(team);
+	}
+
+	public Coach getCoachByTeam(Team team) {
+		return coachRepo.getCoachByTeam(team.getCoach().getName());
+	}
+
+	public void saveTeam(Team team) {
+		teamRepo.save(team);
+	}
+
+	public Integer getMaxLeftOpponentsFromAllTeams() {
+		Page<Team> maxLeftOpponentsFromAllTeams = teamRepo.getMaxLeftOpponentsFromAllTeams(PageRequest.of(0, 1));
+		return maxLeftOpponentsFromAllTeams.iterator().next().getLeftOpponents().size();
+	}
+
+	//add all needed items for new player
 	public void addNewGameContent(Owner owner) {
 
 		//BOSTON CELTICS
@@ -58,7 +83,7 @@ public class GameService {
 		cityRepo.save(boston_city);
 		Hall td_garden = new Hall("TD Garden");
 		hallRepo.save(td_garden);
-		Team boston_celtics = new Team("Boston Celtics", td_garden, boston_city, brad_stevens, owner, false);
+		Team boston_celtics = new Team("Boston Celtics", td_garden, boston_city, brad_stevens, owner);
 		teamRepo.save(boston_celtics);
 		Player kyrie_irving = new Player("Kyrie Irving", Position.PG, boston_celtics);
 		playerRepo.save(kyrie_irving);
@@ -78,7 +103,7 @@ public class GameService {
 		cityRepo.save(utah);
 		Hall vivint_smart_arena = new Hall("Vivint Smart Arena");
 		hallRepo.save(vivint_smart_arena);
-		Team utah_jazz = new Team("Utah Jazz", vivint_smart_arena, utah, quin_snyder, owner, false);
+		Team utah_jazz = new Team("Utah Jazz", vivint_smart_arena, utah, quin_snyder, owner);
 		teamRepo.save(utah_jazz);
 		Player ricky_rubio = new Player("Ricky Rubio", Position.PG, utah_jazz);
 		playerRepo.save(ricky_rubio);
@@ -98,7 +123,7 @@ public class GameService {
 		cityRepo.save(los_angeles);
 		Hall staples_center = new Hall("Staples Center");
 		hallRepo.save(staples_center);
-		Team los_angeles_lakers = new Team("Los Angeles Lakers", staples_center, los_angeles, luke_walton, owner, false);
+		Team los_angeles_lakers = new Team("Los Angeles Lakers", staples_center, los_angeles, luke_walton, owner);
 		teamRepo.save(los_angeles_lakers);
 		Player lonzo_ball = new Player("Lonzo Ball", Position.PG, los_angeles_lakers);
 		playerRepo.save(lonzo_ball);
@@ -119,7 +144,7 @@ public class GameService {
 		cityRepo.save(houston);
 		Hall toyota_center = new Hall("Toyota Center");
 		hallRepo.save(toyota_center);
-		Team houston_rockets = new Team("Houston Rockets", toyota_center, houston, mike_dantoni, owner, false);
+		Team houston_rockets = new Team("Houston Rockets", toyota_center, houston, mike_dantoni, owner);
 		teamRepo.save(houston_rockets);
 		Player chris_paul = new Player("Chris Paul", Position.PG, houston_rockets);
 		playerRepo.save(chris_paul);
@@ -139,7 +164,7 @@ public class GameService {
 		cityRepo.save(san_francisco);
 		Hall oracle_arena = new Hall("Oracle Arena");
 		hallRepo.save(oracle_arena);
-		Team golden_state_warriors = new Team("Golden State Warriors", oracle_arena, san_francisco, steve_kerr, owner, false);
+		Team golden_state_warriors = new Team("Golden State Warriors", oracle_arena, san_francisco, steve_kerr, owner);
 		teamRepo.save(golden_state_warriors);
 		Player steph_curry = new Player("Steph Curry", Position.PG, golden_state_warriors);
 		playerRepo.save(steph_curry);
@@ -151,5 +176,26 @@ public class GameService {
 		playerRepo.save(draymond_green);
 		Player demarcus_cousins = new Player("Demarcus Cousins", Position.C, golden_state_warriors);
 		playerRepo.save(demarcus_cousins);
+
+		//SAN ANTONIO SPURS
+		Coach gregg_popovic = new Coach("Gregg Popovic");
+		coachRepo.save(gregg_popovic);
+		City san_antonio = new City("San Antonio");
+		cityRepo.save(san_antonio);
+		Hall att_center = new Hall("AT&T Center");
+		hallRepo.save(att_center);
+		Team san_antonio_spurs = new Team("San Antonio Spurs", att_center, san_antonio, gregg_popovic, owner);
+		teamRepo.save(san_antonio_spurs);
+		Player patty_mills = new Player("Patty Mills", Position.PG, san_antonio_spurs);
+		playerRepo.save(patty_mills);
+		Player marco_belinelli = new Player("Marco Belinelli", Position.SG, san_antonio_spurs);
+		playerRepo.save(marco_belinelli);
+		Player demar_deRozan = new Player("Demar DeRozan", Position.SF, san_antonio_spurs);
+		playerRepo.save(demar_deRozan);
+		Player pau_gasol = new Player("Pau Gasol", Position.PF, san_antonio_spurs);
+		playerRepo.save(pau_gasol);
+		Player lamarcus_aldridge = new Player("Lamarcus Aldridge", Position.C, san_antonio_spurs);
+		playerRepo.save(lamarcus_aldridge);
 	}
+
 }

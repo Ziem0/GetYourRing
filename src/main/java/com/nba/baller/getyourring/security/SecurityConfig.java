@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.permitAll()
 				.antMatchers("/admin")
 					.hasRole("ADMIN")
-				.antMatchers("/game")
+				.antMatchers("/game/**")
 					.hasRole("USER")
 //				.antMatchers("/home")
 //					.anonymous()  --> don't let to open home page when being logged
