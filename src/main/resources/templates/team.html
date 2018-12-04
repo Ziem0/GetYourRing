@@ -29,6 +29,14 @@
 <p th:text="${wins}"></p>
 <p th:text="${balance}"></p>
 
+<tr th:each="match : ${matches}" th:object="${matches}">
+    <td th:text="${match.getTeamOne().getName()}">match</td>
+    <td>vs</td>
+    <td th:text="${match.getTeamTwo().getName()}">match</td>
+    <br>
+</tr>
+
+
 <form name="logoutForm" th:action="@{/logout}" method="post">
 <input type="submit" value="Sign Out"/>
 </form>

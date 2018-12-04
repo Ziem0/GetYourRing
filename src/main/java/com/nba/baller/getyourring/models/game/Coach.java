@@ -35,11 +35,10 @@ public class Coach {
 		return new Random().nextBoolean();
 	}
 
-	private Position getRandomPosition() {
+	public Position getRandomPosition() {
 		Position[] positions = Position.values();
-		int i = new Random().nextInt(6 - 1) + 1;
+		int i = new Random().nextInt(5);
 		return positions[i];
 	}
-
 
 }

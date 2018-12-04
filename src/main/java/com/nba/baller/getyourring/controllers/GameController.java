@@ -1,5 +1,6 @@
 package com.nba.baller.getyourring.controllers;
 
+import com.nba.baller.getyourring.helpers.Position;
 import com.nba.baller.getyourring.models.Owner;
 import com.nba.baller.getyourring.models.game.Coach;
 import com.nba.baller.getyourring.models.game.Match;
@@ -99,7 +100,9 @@ public class GameController {
 	}
 
 	/**
-	 * responsible for set user's team and update database
+	 * responsible for:
+	 *  -set user's team and update database
+	 *  -create first round matches
 	 * automatically redirect to team page
 	 * @param team
 	 * @param response
@@ -111,11 +114,20 @@ public class GameController {
 
 		gameService.updateUserTeam(userTeam);
 
+		setNextRoundMatches();
+
 		response.sendRedirect("/game/team");
 	}
 
 	/**
 	 * control center for game app
+	 * view my:
+	 *  -players
+	 *  -coach
+	 *  -city
+	 *  -hall
+	 *  -plus minus
+	 *  -next round matches
 	 * @param map [players, coach, city, hall, wins, balance]
 	 * @return team.html
 	 */
@@ -123,7 +135,6 @@ public class GameController {
 	public String getTeamPage(ModelMap map) {
 		List<Player> players = gameService.getPlayersByTeam(userTeam);
 		Coach coach = gameService.getCoachByTeam(userTeam);
-		setNextRoundMatches();
 
 		map.addAttribute("players", players);
 		map.addAttribute("coach", coach);
@@ -131,25 +142,147 @@ public class GameController {
 		map.addAttribute("hall", userTeam.getHall().getName());
 		map.addAttribute("wins", userTeam.getWins());
 		map.addAttribute("balance", userTeam.getPlusMinus());
-
-		System.out.println("nextRound");
-		nextRoundMatches.forEach(match -> System.out.println(match.getTeamOne().getName() + "--" + match.getTeamTwo().getName() + "\n"));
-
+		map.addAttribute("matches", nextRoundMatches);
 
 		return "team";
 	}
 
+	/**
+	 * reload:
+	 * -coach skills
+	 * -all players overall
+	 *
+	 * @return matches.html
+	 */
 	@GetMapping("/game/matches")
-	public String getMatchesPage() {
+	public String getMatchesPage(ModelMap modelMap) {
 		/*
-		Reload:
-		-coach skills
-		-all players overall
-		-next opponent
+		match by match
+		match divided into 5 parts
+		parts got players sorted by position
+		need:
+		teamOne hall for background
+		teamOneScore teamTwoScore
+		players overall and position
+		coach boost - special value for position and position
 		 */
 
-		return"matches";
-}
+		modelMap.addAttribute("one",1);
+		modelMap.addAttribute("two", 2);
+
+		modelMap.addAttribute("nextRoundMatches", nextRoundMatches);
+
+		int count = 0;
+
+		for (Match match : nextRoundMatches) {
+
+			Team team1 = match.getTeamOne();
+			Team team2 = match.getTeamTwo();
+
+			Integer teamOneScore = match.getTeamOneScore();
+			Integer teamTwoScore = match.getTeamTwoScore();
+
+			Coach teamOneCoach = team1.getCoach();
+			Coach teamTwoCoach = team2.getCoach();
+
+			Position oneCoachRandomPosition = teamOneCoach.getRandomPosition();
+			Position twoCoachRandomPosition = teamTwoCoach.getRandomPosition();
+
+			String city = team1.getCity().getName();
+			String hall = team1.getHall().getName();
+			modelMap.addAttribute("city"+count, city);
+			modelMap.addAttribute("hall"+count, hall);
+
+			List<Player> playersByTeam1 = gameService.getPlayersByTeam(team1);
+			List<Player> playersByTeam2 = gameService.getPlayersByTeam(team2);
+
+			for (int i = 0; i < playersByTeam1.size(); i++) {
+
+				Player playerHome = playersByTeam1.get(i);
+				Player playerAway = playersByTeam2.get(i);
+
+				Integer scorePlayer1 = playerHome.getOverall() * 6;
+				Integer scorePlayer2 = playerAway.getOverall() * 6;
+
+				if (oneCoachRandomPosition == playerHome.getPosition()) {
+					playerHome.setOverall(playerHome.getOverall() + teamOneCoach.getSpecialValueForPosition());
+				}
+				if (twoCoachRandomPosition == playerAway.getPosition()) {
+					playerAway.setOverall(playerAway.getOverall() + teamTwoCoach.getSpecialValueForPosition());
+				}
+
+				if (Math.abs(scorePlayer1 - scorePlayer2) > 6) {
+					boolean isHomeBoost = new Random().nextBoolean();
+					int crowdFactor = new Random().nextInt(13 - 6) + 1;
+					if (isHomeBoost) {
+						scorePlayer1 += crowdFactor;
+					} else {
+						scorePlayer2 += crowdFactor;
+					}
+				}
+
+				StringBuilder battle = new StringBuilder();
+				battle
+						.append(playerHome.getName())
+						.append("     vs     ")
+						.append(playerAway.getName())
+						.append("     score     ")
+						.append(scorePlayer1)
+						.append("     :     ")
+						.append(scorePlayer2)
+						.append("\n");
+
+				teamOneScore += scorePlayer1;
+				teamTwoScore += scorePlayer2;
+
+				StringBuilder summary = new StringBuilder();
+				summary
+						.append("summary")
+						.append(teamOneScore)
+						.append("     :     ")
+						.append(teamTwoScore)
+						.append("\n");
+
+				if (i == 4 && teamOneScore.equals(teamTwoScore)) {
+				}
+
+//				modelMap.addAttribute(String.valueOf(i+count+10), battle);
+//				modelMap.addAttribute(String.valueOf(i+count+20), summary);
+				modelMap.addAttribute("battle" + (i + 1) + count, battle);
+				modelMap.addAttribute("summary" + (i + 1) + count, summary);
+
+			}
+
+			count++;
+
+			//save zone
+			match.setTeamOneScore(teamOneScore);
+			match.setTeamTwoScore(teamTwoScore);
+			gameService.saveMatch(match);
+
+			if (teamOneScore > teamTwoScore) {
+				team1.setWin();
+				team1.setPlusMinus(teamOneScore-teamTwoScore);
+			} else {
+				team2.setWin();
+				team2.setPlusMinus(teamTwoScore-teamOneScore);
+			}
+			gameService.saveTeam(team1);
+			gameService.saveTeam(team2);
+		}
+
+		return "matches";
+	}
+
+	/**
+	 *
+	 * set next round matches
+	 * redirect to /game/team
+	 */
+	@PostMapping("/game/matches")
+	public void finishRound() {
+		setNextRoundMatches();
+	}
 
 
 	@GetMapping("/game/trade")
@@ -275,7 +408,7 @@ public class GameController {
 
 			for (Team t : entry.getValue()) {
 				if (!usedTeams.contains(t)) {
-					Match match = new Match(new Date(), entry.getKey(), t, 0, 0);
+					Match match = new Match(new Date(), entry.getKey(), t);
 					nextRoundMatches.add(match);
 					usedTeams.add(entry.getKey());
 					usedTeams.add(t);

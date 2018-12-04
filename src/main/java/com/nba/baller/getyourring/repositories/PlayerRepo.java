@@ -13,5 +13,7 @@ import java.util.List;
 public interface PlayerRepo extends CrudRepository<Player, Integer> {
 
 	@Query(value = "select p from Player p where p.team=:deliveredTeam")
-	List<Player> getPlayersById(@Param("deliveredTeam") Team team);
+	List<Player> getPlayersByTeam(@Param("deliveredTeam") Team team);
+
+
 }

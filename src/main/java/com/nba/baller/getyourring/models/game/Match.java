@@ -44,4 +44,14 @@ public class Match {
 		this.teamOneScore = teamOneScore;
 		this.teamTwoScore = teamTwoScore;
 	}
+
+	public Match(Date date, Team teamOne, Team teamTwo) {
+		this.date = date;
+		this.teamOne = teamOne;
+		this.teamTwo = teamTwo;
+		this.teamOneScore = 0;
+		this.teamTwoScore = 0;
+	}
+
+
 }

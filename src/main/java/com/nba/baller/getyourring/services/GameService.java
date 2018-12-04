@@ -57,7 +57,7 @@ public class GameService {
 	}
 
 	public List<Player> getPlayersByTeam(Team team) {
-		return playerRepo.getPlayersById(team);
+		return playerRepo.getPlayersByTeam(team);
 	}
 
 	public Coach getCoachByTeam(Team team) {
@@ -72,6 +72,18 @@ public class GameService {
 		Page<Team> maxLeftOpponentsFromAllTeams = teamRepo.getMaxLeftOpponentsFromAllTeams(PageRequest.of(0, 1));
 		return maxLeftOpponentsFromAllTeams.iterator().next().getLeftOpponents().size();
 	}
+
+	public void savePlayer(Player player) {
+		playerRepo.save(player);
+	}
+
+	public void saveMatch(Match match) {
+		matchRepo.save(match);
+	}
+
+//	public List<Player> getPlayersByTeamSortedByPosition(Team team) {
+//		return playerRepo.getPlayersByTeamSortedByPosition();
+//	}
 
 	//add all needed items for new player
 	public void addNewGameContent(Owner owner) {

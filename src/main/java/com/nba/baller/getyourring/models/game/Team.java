@@ -69,4 +69,8 @@ public class Team {
 		this.plusMinus = plusMinus;
 		this.leftOpponents = leftOpponents;
 	}
+
+	public void setWin() {
+		this.wins += 1;
+	}
 }
