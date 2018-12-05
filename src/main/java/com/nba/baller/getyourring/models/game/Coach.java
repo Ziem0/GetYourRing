@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.Random;
 
 @Slf4j
@@ -23,22 +24,30 @@ public class Coach {
 
 	private Integer specialValueForPosition;
 
+	@Transient
+	private Position boostedPosition;
+
 	public Coach() {
 	}
 
 	public Coach(String name) {
 		this.name = name;
-		this.specialValueForPosition = getRandom() ? -1 : 1;
+		this.specialValueForPosition = setRandomValueForPosition();
+		this.setRandomPosition();
 	}
 
 	private boolean getRandom() {
 		return new Random().nextBoolean();
 	}
 
-	public Position getRandomPosition() {
+	public void setRandomPosition() {
 		Position[] positions = Position.values();
 		int i = new Random().nextInt(5);
-		return positions[i];
+		boostedPosition = positions[i];
+	}
+
+	public int setRandomValueForPosition() {
+		return this.specialValueForPosition = getRandom() ? -1 : 1;
 	}
 
 }

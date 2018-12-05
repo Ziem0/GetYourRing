@@ -1,6 +1,5 @@
 package com.nba.baller.getyourring.controllers;
 
-import com.nba.baller.getyourring.helpers.Position;
 import com.nba.baller.getyourring.models.Owner;
 import com.nba.baller.getyourring.models.game.Coach;
 import com.nba.baller.getyourring.models.game.Match;
@@ -55,10 +54,11 @@ public class GameController {
 
 	/**
 	 * responsible for:
-	 * 	 -setting class fields
-	 * 	 -create new content if new user is present
-	 * 	 -else load previous content
-	 * 	 -redirect to intro page
+	 * -setting class fields
+	 * -create new content if new user is present
+	 * -else load previous content
+	 * -redirect to intro page
+	 *
 	 * @param response
 	 * @param request
 	 * @throws IOException
@@ -86,6 +86,7 @@ public class GameController {
 	/**
 	 * game rules
 	 * player's team selection when new user is present
+	 *
 	 * @param model
 	 * @return intro.html
 	 */
@@ -101,9 +102,10 @@ public class GameController {
 
 	/**
 	 * responsible for:
-	 *  -set user's team and update database
-	 *  -create first round matches
+	 * -set user's team and update database
+	 * -create first round matches
 	 * automatically redirect to team page
+	 *
 	 * @param team
 	 * @param response
 	 * @throws IOException
@@ -122,12 +124,13 @@ public class GameController {
 	/**
 	 * control center for game app
 	 * view my:
-	 *  -players
-	 *  -coach
-	 *  -city
-	 *  -hall
-	 *  -plus minus
-	 *  -next round matches
+	 * -players
+	 * -coach
+	 * -city
+	 * -hall
+	 * -plus minus
+	 * -next round matches
+	 *
 	 * @param map [players, coach, city, hall, wins, balance]
 	 * @return team.html
 	 */
@@ -148,17 +151,13 @@ public class GameController {
 	}
 
 	/**
-	 * reload:
-	 * -coach skills
-	 * -all players overall
-	 *
 	 * @return matches.html
 	 */
 	@GetMapping("/game/matches")
 	public String getMatchesPage(ModelMap modelMap) {
 		/*
 		match by match
-		match divided into 5 parts
+		match divided into 5 battles
 		parts got players sorted by position
 		need:
 		teamOne hall for background
@@ -167,17 +166,29 @@ public class GameController {
 		coach boost - special value for position and position
 		 */
 
-		modelMap.addAttribute("one",1);
-		modelMap.addAttribute("two", 2);
-
 		modelMap.addAttribute("nextRoundMatches", nextRoundMatches);
 
-		int count = 0;
+		int matchCounter = 0;
 
 		for (Match match : nextRoundMatches) {
 
+			//reset scoring as a security against hacking(refreshing page)
+			match.setTeamOneScore(0);
+			match.setTeamTwoScore(0);
+			gameService.saveMatch(match);
+
 			Team team1 = match.getTeamOne();
 			Team team2 = match.getTeamTwo();
+			modelMap.addAttribute("teamHome" + matchCounter, team1.getName());
+			modelMap.addAttribute("teamAway" + matchCounter, team2.getName());
+
+			String city = team1.getCity().getName();
+			String hall = team1.getHall().getName();
+			modelMap.addAttribute("city" + matchCounter, city);
+			modelMap.addAttribute("hall" + matchCounter, hall);
+
+			List<Player> playersByTeam1 = gameService.getPlayersByTeam(team1);
+			List<Player> playersByTeam2 = gameService.getPlayersByTeam(team2);
 
 			Integer teamOneScore = match.getTeamOneScore();
 			Integer teamTwoScore = match.getTeamTwoScore();
@@ -185,35 +196,53 @@ public class GameController {
 			Coach teamOneCoach = team1.getCoach();
 			Coach teamTwoCoach = team2.getCoach();
 
-			Position oneCoachRandomPosition = teamOneCoach.getRandomPosition();
-			Position twoCoachRandomPosition = teamTwoCoach.getRandomPosition();
-
-			String city = team1.getCity().getName();
-			String hall = team1.getHall().getName();
-			modelMap.addAttribute("city"+count, city);
-			modelMap.addAttribute("hall"+count, hall);
-
-			List<Player> playersByTeam1 = gameService.getPlayersByTeam(team1);
-			List<Player> playersByTeam2 = gameService.getPlayersByTeam(team2);
+			boolean isHomeBoost = team1.getHall().isCrowdFactorHome();
+			int crowdFactor = team1.getHall().getCrowdFactor();
+			boolean isOvertimeCrowdFactorHome = team1.getHall().isOvertimeCrowdFactorHome();
+			int overtimeBooster = team1.getHall().getOvertimeScoreBooster();
 
 			for (int i = 0; i < playersByTeam1.size(); i++) {
 
 				Player playerHome = playersByTeam1.get(i);
 				Player playerAway = playersByTeam2.get(i);
 
-				Integer scorePlayer1 = playerHome.getOverall() * 6;
-				Integer scorePlayer2 = playerAway.getOverall() * 6;
+				Integer scorePlayer1 = 0;
+				Integer scorePlayer2 = 0;
 
-				if (oneCoachRandomPosition == playerHome.getPosition()) {
-					playerHome.setOverall(playerHome.getOverall() + teamOneCoach.getSpecialValueForPosition());
+				//active coach boost for player if coach random position is equal with player's position(home)
+				if (teamOneCoach.getBoostedPosition().equals(playerHome.getPosition())) {
+					scorePlayer1 += teamOneCoach.getSpecialValueForPosition();
+
+					StringBuilder coachHome = new StringBuilder();
+					coachHome
+							.append(teamOneCoach.getName())
+							.append("     boosted position:     ")
+							.append(teamOneCoach.getBoostedPosition())
+							.append("     booster value:     ")
+							.append(teamOneCoach.getSpecialValueForPosition());
+
+					modelMap.addAttribute("coachHome" + matchCounter, coachHome);
 				}
-				if (twoCoachRandomPosition == playerAway.getPosition()) {
-					playerAway.setOverall(playerAway.getOverall() + teamTwoCoach.getSpecialValueForPosition());
+				//active coach boost for player if coach random position is equal with player's position(away)
+				if (teamTwoCoach.getBoostedPosition().equals(playerAway.getPosition())) {
+					scorePlayer2 += teamTwoCoach.getSpecialValueForPosition();
+
+					StringBuilder coachAway = new StringBuilder();
+					coachAway
+							.append(teamTwoCoach.getName())
+							.append("     boosted position:     ")
+							.append(teamTwoCoach.getBoostedPosition())
+							.append("     booster value:     ")
+							.append(teamTwoCoach.getSpecialValueForPosition());
+
+					modelMap.addAttribute("coachAway" + matchCounter, coachAway);
 				}
 
+				scorePlayer1 = (scorePlayer1 + playerHome.getOverall()) * 6;
+				scorePlayer2 = (scorePlayer2 + playerAway.getOverall()) * 6;
+
+				//active crowd factor if score difference is higher than 6
 				if (Math.abs(scorePlayer1 - scorePlayer2) > 6) {
-					boolean isHomeBoost = new Random().nextBoolean();
-					int crowdFactor = new Random().nextInt(13 - 6) + 1;
 					if (isHomeBoost) {
 						scorePlayer1 += crowdFactor;
 					} else {
@@ -223,65 +252,97 @@ public class GameController {
 
 				StringBuilder battle = new StringBuilder();
 				battle
+						.append("(")
+						.append(playerHome.getPosition())
+						.append(")")
+						.append("[")
+						.append(playerHome.getOverall())
+						.append("]")
 						.append(playerHome.getName())
 						.append("     vs     ")
+						.append("(")
+						.append(playerAway.getPosition())
+						.append(")")
+						.append("[")
+						.append(playerAway.getOverall())
+						.append("]")
 						.append(playerAway.getName())
 						.append("     score     ")
 						.append(scorePlayer1)
 						.append("     :     ")
-						.append(scorePlayer2)
-						.append("\n");
+						.append(scorePlayer2);
 
 				teamOneScore += scorePlayer1;
 				teamTwoScore += scorePlayer2;
 
 				StringBuilder summary = new StringBuilder();
 				summary
-						.append("summary")
+						.append("     summary     ")
 						.append(teamOneScore)
 						.append("     :     ")
-						.append(teamTwoScore)
-						.append("\n");
+						.append(teamTwoScore);
 
+				//active if score is equal after all 5 battles
 				if (i == 4 && teamOneScore.equals(teamTwoScore)) {
+					if (teamOneCoach.getSpecialValueForPosition() > teamTwoCoach.getSpecialValueForPosition()) {
+						teamOneScore++;
+					} else {
+						if (isOvertimeCrowdFactorHome) {
+							teamOneScore += overtimeBooster;
+						} else {
+							teamTwoScore += overtimeBooster;
+						}
+					}
+
+					summary
+							.append("     overtime!!!     ")
+							.append(teamOneScore)
+							.append("     :     ")
+							.append(teamTwoScore);
 				}
 
-//				modelMap.addAttribute(String.valueOf(i+count+10), battle);
-//				modelMap.addAttribute(String.valueOf(i+count+20), summary);
-				modelMap.addAttribute("battle" + (i + 1) + count, battle);
-				modelMap.addAttribute("summary" + (i + 1) + count, summary);
-
+				modelMap.addAttribute("battle" + (i + 1) + matchCounter, battle);
+				modelMap.addAttribute("summary" + (i + 1) + matchCounter, summary);
 			}
 
-			count++;
+			matchCounter++;
 
-			//save zone
+			//set winner
+			if (teamOneScore > teamTwoScore) {
+				team1.setWin();
+			} else {
+				team2.setWin();
+			}
+
+			//set plus minus balance
+			team1.setPlusMinus(teamOneScore - teamTwoScore);
+			team2.setPlusMinus(teamTwoScore - teamOneScore);
+
+			//update teams
+			gameService.saveTeam(team1);
+			gameService.saveTeam(team2);
+
+			//save match
 			match.setTeamOneScore(teamOneScore);
 			match.setTeamTwoScore(teamTwoScore);
 			gameService.saveMatch(match);
-
-			if (teamOneScore > teamTwoScore) {
-				team1.setWin();
-				team1.setPlusMinus(teamOneScore-teamTwoScore);
-			} else {
-				team2.setWin();
-				team2.setPlusMinus(teamTwoScore-teamOneScore);
-			}
-			gameService.saveTeam(team1);
-			gameService.saveTeam(team2);
 		}
 
 		return "matches";
 	}
 
+	//add new button for special events in game
+	//addition display for special coach value and crowd effect and overtime
+	//mark player which has been boosted by a coach
+
 	/**
-	 *
 	 * set next round matches
 	 * redirect to /game/team
 	 */
 	@PostMapping("/game/matches")
-	public void finishRound() {
+	public void finishRound(HttpServletResponse response) throws IOException {
 		setNextRoundMatches();
+		response.sendRedirect("/game/team");
 	}
 
 
@@ -314,7 +375,6 @@ public class GameController {
 //	public String getCoachPage() {
 //		return "coach";
 //	}
-
 
 
 	//HELPERS
@@ -358,9 +418,9 @@ public class GameController {
 
 	/**
 	 * reset:
-	 *  -usedTeams list
-	 *  -nextRoundMatches list
-	 *  -opponents map with distinct team as a key and the rest available teams as opponents
+	 * -usedTeams list
+	 * -nextRoundMatches list
+	 * -opponents map with distinct team as a key and the rest available teams as opponents
 	 * update opponents map with available teams based on isNewSeason
 	 */
 	private void setNextRoundMatches() {
@@ -394,11 +454,19 @@ public class GameController {
 	 * add used teams to usedTeams list
 	 * set leftOpponents field for each used team
 	 * update team in database
+	 *
 	 * @param usedTeams
 	 * @param opponents
 	 */
 	private void createMatchesForNextRound(List<Team> usedTeams, Map<Team, List<Team>> opponents) {
 		for (Map.Entry<Team, List<Team>> entry : opponents.entrySet()) {
+
+			List<Player> players = gameService.getPlayersByTeam(entry.getKey());
+			players.forEach(Player::setRandomOverall);
+
+			Coach coach = gameService.getCoachByTeam(entry.getKey());
+			coach.setRandomPosition();
+			coach.setRandomValueForPosition();
 
 			if (usedTeams.contains(entry.getKey())) {
 				entry.getKey().setLeftOpponents(entry.getValue());
@@ -410,10 +478,13 @@ public class GameController {
 				if (!usedTeams.contains(t)) {
 					Match match = new Match(new Date(), entry.getKey(), t);
 					nextRoundMatches.add(match);
+
 					usedTeams.add(entry.getKey());
 					usedTeams.add(t);
+
 					entry.getValue().remove(t);
 					entry.getKey().setLeftOpponents(entry.getValue());
+
 					gameService.saveTeam(entry.getKey());
 					break;
 				}

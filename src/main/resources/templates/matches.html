@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>gameDay</title>
 
+    <script type="text/javascript">
+        window.onbeforeunload = function() {
+            return "Dude, are you sure you want to leave?!";
+        }
+    </script>
+
     <script th:inline="javascript">
         function showBattle(bbx, batx) {
             document.getElementById(bbx).innerHTML = document.getElementById(batx).innerText;
@@ -19,11 +25,26 @@
 
 <h1>matches page</h1>
 
-<th:block th:each="game, iterator : ${nextRoundMatches}" th:object="${game}">
-    <div th:with="c = city+${iterator.index}, h = hall+${iterator.index}">
-        <p th:text="${__${c}__}">city</p>
-        <p th:text="${__${h}__}">hall</p>
-    </div>
+<th:block th:each="game, iterator : ${nextRoundMatches}">
+    <tr th:with="c = city+${iterator.index}, h = hall+${iterator.index}
+                ,t1 = teamHome+${iterator.index}, t2 = teamAway+${iterator.index}, c1 = coachHome+${iterator.index}, c2 = coachAway+${iterator.index}">
+        <td>City:</td>
+        <td th:text="${__${c}__}">city</td>
+        <br>
+        <td>Hall:</td>
+        <td th:text="${__${h}__}">hall</td>
+        <br>
+        <td>Match:</td>
+        <td th:text="${__${t1}__}">teamHome</td>
+        <td> vs </td>
+        <td th:text="${__${t2}__}">teamAway</td>
+        <br>
+        <td>Coaches:</td>
+        <td th:text="${__${c1}__}">coachHome</td>
+        <td> vs </td>
+        <td th:text="${__${c2}__}">coachAway</td>
+
+    </tr>
     <th:block th:each="pvp: ${#numbers.sequence(1, 5)}" th:value="${pvp}">
 
         <div th:with="b = battle + ${pvp} + ${iterator.index},s = summary + ${pvp} + ${iterator.index}
@@ -42,7 +63,10 @@
     </th:block>
 </th:block>
 
-<a href="/game/team">NEXT</a>
+<form method="post" action="#" th:action="@{/game/matches}">
+    <button type="submit">NEXT</button>
+</form>
+
 
 </body>
 </html>

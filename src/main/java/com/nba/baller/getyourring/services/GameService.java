@@ -81,10 +81,6 @@ public class GameService {
 		matchRepo.save(match);
 	}
 
-//	public List<Player> getPlayersByTeamSortedByPosition(Team team) {
-//		return playerRepo.getPlayersByTeamSortedByPosition();
-//	}
-
 	//add all needed items for new player
 	public void addNewGameContent(Owner owner) {
 

@@ -44,11 +44,11 @@ public class Player {
 		this.contractValue = new Random().nextInt(11 - 3)+3;
 	}
 
-	public void setOverall(Integer overall) {
+	public void setRandomOverall() {
 		this.overall = new Random().nextInt(6-1)+1;
 	}
 
-	public void setContractValue(Integer contractValue) {
+	public void setRandomContractValue() {
 		this.contractValue = new Random().nextInt(11 - 3)+3;
 	}
 
