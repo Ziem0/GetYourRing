@@ -6,17 +6,32 @@
 </head>
 <body>
 
-<h1>intro page</h1>
+<h1>awards page</h1>
 
-<!--<form method="post" action="#" th:action="@{/create}" th:object="${owner}">-->
-<!--<label>username</label>-->
-<!--<input type="text" name="username" th:field="*{username}">-->
-<!--<label>password</label>-->
-<!--<input type="password" name="password" th:field="*{password}">-->
-<!--<label>email</label>-->
-<!--<input type="email" name="email" th:field="*{email}">-->
-<!--<input type="submit" value="login">-->
-<!--</form>-->
+<h2 th:text="${comment}">comment</h2>
+
+<!--on podium background-->
+<h3 th:text="${winner}">winner</h3>
+<h4 th:text="${second}">2nd</h4>
+<h5 th:text="${third}">3rd</h5>
+
+
+<table style="border:1px solid black; border-collapse: collapse" width="10%">
+    <tr style="border:1px solid black">
+        <th>Team</th>
+        <th>Wins</th>
+        <th>+-</th>
+    </tr>
+    <tr th:each="team : ${teams}" style="border:1px solid black">
+        <th th:text="${team.getName()}">team</th>
+        <th th:text="${team.getWins()}">wins</th>
+        <th th:text="${team.getPlusMinus()}">plus minus</th>
+    </tr>
+</table>
+
+<form method="post" action="#" th:action="@{/game/awards}">
+    <button type="submit">START NEXT SEASON</button>
+</form>
 
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.nba.baller.getyourring.controllers;
 
+import com.nba.baller.getyourring.helpers.TeamsComparator;
 import com.nba.baller.getyourring.models.Owner;
 import com.nba.baller.getyourring.models.game.Coach;
 import com.nba.baller.getyourring.models.game.Match;
@@ -341,29 +342,99 @@ public class GameController {
 	 */
 	@PostMapping("/game/matches")
 	public void finishRound(HttpServletResponse response) throws IOException {
-		setNextRoundMatches();
-		response.sendRedirect("/game/team");
+		boolean isSeasonEnd = gameService.getMaxLeftOpponentsFromAllTeams() == 0;
+		if (isSeasonEnd) {
+			response.sendRedirect("/game/awards");
+		} else {
+			setNextRoundMatches();
+			response.sendRedirect("/game/team");
+		}
 	}
 
-
-	@GetMapping("/game/trade")
-	public String getTradePage() {
-		return "trade";
-	}
-
+	/**
+	 * sort teams list by wins and balance
+	 * passes sorted list to table.html
+	 * @param map
+	 * @return table.html
+	 */
 	@GetMapping("/game/table")
-	public String getTablePage() {
+	public String getTablePage(ModelMap map) {
+		teams.sort(TeamsComparator.compareForSorting());
+		map.addAttribute("teams", teams);
 		return "table";
 	}
 
+	@GetMapping("/game/trade")
+	public String getTradePage(ModelMap map) {
+		return "trade";
+	}
+
+	/**
+	 * create ring for user if first place was taken
+	 * pass presidium comment
+	 * pass podium
+	 * pass mini table for teams
+	 * @param map
+	 */
 	@GetMapping("/game/awards")
-	public String getAwardsPage() {
-		/*
-		Reload:
-		-players contracts
-		-add ring
-		 */
+	public String getAwardsPage(ModelMap map) {
+		//redirect to awards
+		//create player and team generally statistics?
+		//create mvp based won battles by player and won games(list position) as a team read from database
+		//contract reset after season
+		//table - add matches played
+		//back for tables
+
+		teams.sort(TeamsComparator.compareForSorting());
+		map.addAttribute("teams", teams);
+
+		StringBuilder companyPresidiumComment = new StringBuilder();
+		for (int i = 0; i < teams.size(); i++) {
+			if (teams.get(i).getName().equals(userTeam.getName())) {
+				switch (i) {
+					case 0:
+						companyPresidiumComment.append("RING! is yours! You are a true legend! Ring is forever and fame will never die! ");
+						//create ring
+						break;
+					case 1:
+						companyPresidiumComment.append("SILVER! Congrats! You are skilled enough to become a legend!");
+						break;
+					case 2:
+						companyPresidiumComment.append("BRONZE! This is something! We appreciate your effort and wish at least the same position next year!");
+						break;
+					case 3:
+						companyPresidiumComment.append("You were so close to get the bronze! We don't know what to think about that..");
+						break;
+					case 4:
+						companyPresidiumComment.append("Do you know something about basketball?! Terrible!");
+						break;
+					case 5:
+						companyPresidiumComment.append("You're a one of the worst coach I've ever seen!!");
+						break;
+					default:
+						companyPresidiumComment.append("Your final position makes me sick!!!");
+						break;
+				}
+			}
+			map.addAttribute("comment", companyPresidiumComment);
+			map.addAttribute("winner", teams.get(0).getName());
+			map.addAttribute("second", teams.get(1).getName());
+			map.addAttribute("third", teams.get(2).getName());
+		}
 		return "awards";
+	}
+
+	/**
+	 * reload teams with new opponents
+	 * update contracts for players
+	 * set new round*
+	 * @param response
+	 * @throws IOException
+	 */
+	@PostMapping("/game/awards")
+	public void finishSeason(HttpServletResponse response) throws IOException {
+		setNextRoundMatches();
+		response.sendRedirect("/game/team");
 	}
 
 //	@GetMapping("/game/player")
