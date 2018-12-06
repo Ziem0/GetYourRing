@@ -16,7 +16,7 @@ import java.util.List;
 public class Team {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Column(nullable = false)
@@ -40,6 +40,8 @@ public class Team {
 
 	private Integer plusMinus;
 
+	private Integer seasonGamesPlayed;
+
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Team> leftOpponents;
 
@@ -56,9 +58,10 @@ public class Team {
 		this.wins = 0;
 		this.plusMinus = 0;
 		this.leftOpponents = new LinkedList<>();
+		this.seasonGamesPlayed = 0;
 	}
 
-	public Team(String name, Hall hall, City city, Coach coach, Owner owner, Boolean controlledByPlayer, Integer wins, Integer plusMinus, List<Team> leftOpponents) {
+	public Team(String name, Hall hall, City city, Coach coach, Owner owner, Boolean controlledByPlayer, Integer wins, Integer plusMinus, List<Team> leftOpponents, Integer seasonGamesPlayed) {
 		this.name = name;
 		this.hall = hall;
 		this.city = city;
@@ -68,9 +71,20 @@ public class Team {
 		this.wins = wins;
 		this.plusMinus = plusMinus;
 		this.leftOpponents = leftOpponents;
+		this.seasonGamesPlayed = seasonGamesPlayed;
 	}
 
 	public void setWin() {
 		this.wins += 1;
+	}
+
+	public void setSeasonGamesPlayed() {
+		this.seasonGamesPlayed++;
+	}
+
+	public void resetForNewSeason() {
+		this.wins = 0;
+		this.seasonGamesPlayed = 0;
+		this.plusMinus = 0;
 	}
 }

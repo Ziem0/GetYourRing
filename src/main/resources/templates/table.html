@@ -9,25 +9,21 @@
 <h1>table page</h1>
 
 <table style="border:1px solid black; border-collapse: collapse" width="30%">
-    <!--<thead>-->
     <tr style="border:1px solid black">
         <th>Team</th>
+        <th>Played</th>
         <th>Wins</th>
         <th>+-</th>
     </tr>
-    <!--</thead>-->
-    <!--<tbody>-->
     <tr th:each="team : ${teams}" style="border:1px solid black">
         <th th:text="${team.getName()}">team</th>
+        <th th:text="${team.getSeasonGamesPlayed()}">played</th>
         <th th:text="${team.getWins()}">wins</th>
         <th th:text="${team.getPlusMinus()}">plus minus</th>
     </tr>
-    <!--</tbody>-->
-    <!--<tfoot>-->
-    <!--</tfoot>-->
 </table>
 
-
+<button><a href="/game/team">BACK</a></button>
 
 </body>
 </html>

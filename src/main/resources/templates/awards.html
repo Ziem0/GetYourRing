@@ -10,10 +10,26 @@
 
 <h2 th:text="${comment}">comment</h2>
 
-<!--on podium background-->
+<!--podium background-->
 <h3 th:text="${winner}">winner</h3>
 <h4 th:text="${second}">2nd</h4>
 <h5 th:text="${third}">3rd</h5>
+
+<table style="border:1px solid black; border-collapse: collapse" width="10%">
+    <tr style="border:1px solid black">
+        <th>MVP</th>
+        <th>Team</th>
+        <th>Won battles last season</th>
+        <th>Won battles entire career</th>
+    </tr >
+    <tr style="border:1px solid black">
+        <td th:text="${mvp.getName()}"></td>
+        <td th:text="${mvp.getTeam().getName()}"></td>
+        <td th:text="${mvp.getWonBattlesPerSeason()}"></td>
+        <td th:text="${mvp.getWonBattlesEntireCareer()}"></td>
+    </tr>
+</table>
+
 
 
 <table style="border:1px solid black; border-collapse: collapse" width="10%">

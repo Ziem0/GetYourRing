@@ -35,7 +35,6 @@ public class GameService {
 	final
 	HallRepo hallRepo;
 
-
 	@Autowired
 	public GameService(TeamRepo teamRepo, PlayerRepo playerRepo, CoachRepo coachRepo, MatchRepo matchRepo, RingRepo ringRepo, CityRepo cityRepo, HallRepo hallRepo) {
 		this.teamRepo = teamRepo;
@@ -46,6 +45,7 @@ public class GameService {
 		this.cityRepo = cityRepo;
 		this.hallRepo = hallRepo;
 	}
+
 
 
 	public List<Team> getTeamsByOwner(Owner owner) {
@@ -61,24 +61,33 @@ public class GameService {
 	}
 
 	public Coach getCoachByTeam(Team team) {
-		return coachRepo.getCoachByTeam(team.getCoach().getName());
+		return coachRepo.getCoachByTeam(team.getCoach());
 	}
 
 	public void saveTeam(Team team) {
 		teamRepo.save(team);
 	}
 
-	public Integer getMaxLeftOpponentsFromAllTeams() {
-		Page<Team> maxLeftOpponentsFromAllTeams = teamRepo.getMaxLeftOpponentsFromAllTeams(PageRequest.of(0, 1));
+	public Integer getMaxLeftOpponentsFromAllTeams(Owner owner ) {
+		Page<Team> maxLeftOpponentsFromAllTeams = teamRepo.getMaxLeftOpponentsFromAllTeams(PageRequest.of(0, 1), owner);
 		return maxLeftOpponentsFromAllTeams.iterator().next().getLeftOpponents().size();
 	}
 
-	public void savePlayer(Player player) {
-		playerRepo.save(player);
+	public void addRing(Owner owner, Team team, Integer season) {
+		ringRepo.save(new Ring(owner, team.getName(), season));
 	}
 
 	public void saveMatch(Match match) {
 		matchRepo.save(match);
+	}
+
+	public Player getMvp(Owner owner) {
+		Page<Player> mvp = teamRepo.getMvp(PageRequest.of(0, 1), owner);
+		return mvp.iterator().next();
+	}
+
+	public List<Ring> getRingsByOwner(Owner owner) {
+		return ringRepo.getRingsByOwner(owner);
 	}
 
 	//add all needed items for new player

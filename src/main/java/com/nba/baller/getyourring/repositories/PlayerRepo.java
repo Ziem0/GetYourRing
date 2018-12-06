@@ -14,6 +14,4 @@ public interface PlayerRepo extends CrudRepository<Player, Integer> {
 
 	@Query(value = "select p from Player p where p.team=:deliveredTeam order by p.id asc")
 	List<Player> getPlayersByTeam(@Param("deliveredTeam") Team team);
-
-
 }

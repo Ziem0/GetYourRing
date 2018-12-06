@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>intro</title>
+</head>
+<body>
+
+<h1>Rings page</h1>
+
+<div th:if="${rings} == null">
+    <h3>You have no rings so far!</h3>
+    <h3>You must try harder!</h3>
+</div>
+<div th:unless="${rings} == null">
+    <table>
+        <tr>
+            <th>No.</th>
+            <th>Date</th>
+            <th>Team</th>
+            <th>Season</th>
+        </tr>
+        <tr th:each="ring, stat : ${rings}">
+            <th th:text="${stat.count}"></th>
+            <th th:text="${ring.getDate()}"></th>
+            <th th:text="${ring.getTeam()}"></th>
+            <th th:text="${ring.getSeason()}"></th>
+        </tr>
+    </table>
+</div>
+
+
+<button><a href="/game/team">BACK</a></button>
+
+</body>
+</html>

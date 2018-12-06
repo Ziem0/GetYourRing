@@ -16,26 +16,37 @@ import java.util.Date;
 public class Ring {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date date;
 
-	@OneToOne
-	private Match match;
-
 	@ManyToOne
 	private Owner owner;
+
+	@Column(nullable = false)
+	private String team;
+
+	@Column(nullable = false)
+	private Integer season;
 
 	public Ring() {
 	}
 
-	public Ring(Date date, Match match, Owner owner) {
-		this.date = date;
-		this.match = match;
+	public Ring(Owner owner, String team, Integer season) {
+		this.date = new Date();
 		this.owner = owner;
+		this.team = team;
+		this.season = season;
+	}
+
+	public Ring(Date date, Owner owner, String team, Integer season) {
+		this.date = date;
+		this.owner = owner;
+		this.team = team;
+		this.season = season;
 	}
 }
 

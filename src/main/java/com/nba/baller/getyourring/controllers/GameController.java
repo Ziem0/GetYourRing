@@ -2,10 +2,7 @@ package com.nba.baller.getyourring.controllers;
 
 import com.nba.baller.getyourring.helpers.TeamsComparator;
 import com.nba.baller.getyourring.models.Owner;
-import com.nba.baller.getyourring.models.game.Coach;
-import com.nba.baller.getyourring.models.game.Match;
-import com.nba.baller.getyourring.models.game.Player;
-import com.nba.baller.getyourring.models.game.Team;
+import com.nba.baller.getyourring.models.game.*;
 import com.nba.baller.getyourring.services.GameService;
 import com.nba.baller.getyourring.services.UserService;
 import lombok.Setter;
@@ -18,10 +15,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 
 @Slf4j
@@ -39,6 +38,11 @@ public class GameController {
 	private List<Team> teams;
 
 	private List<Match> nextRoundMatches;
+
+	private boolean isPageReload = false;
+
+	private Integer season;
+
 
 	final
 	UserService userService;
@@ -66,7 +70,7 @@ public class GameController {
 	 */
 	@GetMapping("/game")
 	public void game(HttpServletResponse response,
-	                 HttpServletRequest request) throws IOException {
+	                 HttpServletRequest request) throws IOException, ServletException {
 
 		isOwnerNew = false;
 		setOwner(getOwner(request));
@@ -112,12 +116,16 @@ public class GameController {
 	 * @throws IOException
 	 */
 	@PostMapping("/game/intro")
-	public void getUserTeam(String team, HttpServletResponse response) throws IOException {
+	public void getUserTeam(String team, HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
+		season = LocalDate.now().getYear()-1;
+
 		setTeamForNewUser(team);
 
 		gameService.updateUserTeam(userTeam);
 
 		setNextRoundMatches();
+
+		isOwnerNew = false;
 
 		response.sendRedirect("/game/team");
 	}
@@ -137,6 +145,8 @@ public class GameController {
 	 */
 	@GetMapping("/game/team")
 	public String getTeamPage(ModelMap map) {
+		map.addAttribute("season", season);
+
 		List<Player> players = gameService.getPlayersByTeam(userTeam);
 		Coach coach = gameService.getCoachByTeam(userTeam);
 
@@ -152,20 +162,17 @@ public class GameController {
 	}
 
 	/**
+	 * iterate over all matches
+	 * create battles
+	 * pass needed values to html
+	 * set winners
+	 * set team balance
+	 * update teams
+	 *
 	 * @return matches.html
 	 */
 	@GetMapping("/game/matches")
 	public String getMatchesPage(ModelMap modelMap) {
-		/*
-		match by match
-		match divided into 5 battles
-		parts got players sorted by position
-		need:
-		teamOne hall for background
-		teamOneScore teamTwoScore
-		players overall and position
-		coach boost - special value for position and position
-		 */
 
 		modelMap.addAttribute("nextRoundMatches", nextRoundMatches);
 
@@ -304,45 +311,56 @@ public class GameController {
 
 				modelMap.addAttribute("battle" + (i + 1) + matchCounter, battle);
 				modelMap.addAttribute("summary" + (i + 1) + matchCounter, summary);
+
+				//set flag statusAfterLastGame after battle. Flag used in setNextRoundMatches
+				if (scorePlayer1 > scorePlayer2) {
+					playerHome.setStatusAfterLastGame("won");
+					playerAway.setStatusAfterLastGame("lost");
+				} else {
+					playerHome.setStatusAfterLastGame("lost");
+					playerAway.setStatusAfterLastGame("won");
+				}
 			}
 
 			matchCounter++;
 
-			//set winner
-			if (teamOneScore > teamTwoScore) {
-				team1.setWin();
-			} else {
-				team2.setWin();
+			if (!isPageReload) {
+				//set winner
+				if (teamOneScore > teamTwoScore) {
+					team1.setWin();
+				} else {
+					team2.setWin();
+				}
+
+				//set plus minus balance and increase games played
+				team1.setPlusMinus(teamOneScore - teamTwoScore);
+				team1.setSeasonGamesPlayed();
+				team2.setPlusMinus(teamTwoScore - teamOneScore);
+				team2.setSeasonGamesPlayed();
+
+				//update teams
+				gameService.saveTeam(team1);
+				gameService.saveTeam(team2);
+
+				//save match
+				match.setTeamOneScore(teamOneScore);
+				match.setTeamTwoScore(teamTwoScore);
+				gameService.saveMatch(match);
 			}
-
-			//set plus minus balance
-			team1.setPlusMinus(teamOneScore - teamTwoScore);
-			team2.setPlusMinus(teamTwoScore - teamOneScore);
-
-			//update teams
-			gameService.saveTeam(team1);
-			gameService.saveTeam(team2);
-
-			//save match
-			match.setTeamOneScore(teamOneScore);
-			match.setTeamTwoScore(teamTwoScore);
-			gameService.saveMatch(match);
 		}
 
+		isPageReload = true;
 		return "matches";
 	}
-
-	//add new button for special events in game
-	//addition display for special coach value and crowd effect and overtime
-	//mark player which has been boosted by a coach
 
 	/**
 	 * set next round matches
 	 * redirect to /game/team
 	 */
 	@PostMapping("/game/matches")
-	public void finishRound(HttpServletResponse response) throws IOException {
-		boolean isSeasonEnd = gameService.getMaxLeftOpponentsFromAllTeams() == 0;
+	public void finishRound(HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
+		isPageReload = false;
+		boolean isSeasonEnd = gameService.getMaxLeftOpponentsFromAllTeams(owner) == 0;
 		if (isSeasonEnd) {
 			response.sendRedirect("/game/awards");
 		} else {
@@ -354,6 +372,7 @@ public class GameController {
 	/**
 	 * sort teams list by wins and balance
 	 * passes sorted list to table.html
+	 *
 	 * @param map
 	 * @return table.html
 	 */
@@ -361,6 +380,7 @@ public class GameController {
 	public String getTablePage(ModelMap map) {
 		teams.sort(TeamsComparator.compareForSorting());
 		map.addAttribute("teams", teams);
+
 		return "table";
 	}
 
@@ -374,19 +394,24 @@ public class GameController {
 	 * pass presidium comment
 	 * pass podium
 	 * pass mini table for teams
+	 *
 	 * @param map
 	 */
 	@GetMapping("/game/awards")
 	public String getAwardsPage(ModelMap map) {
-		//redirect to awards
-		//create player and team generally statistics?
+		//create player generally statistics?
 		//create mvp based won battles by player and won games(list position) as a team read from database
-		//contract reset after season
-		//table - add matches played
-		//back for tables
+
+		//add new button for special events in game
+		//addition display for special coach value and crowd effect and overtime
+		//mark player which has been boosted by a coach
+
 
 		teams.sort(TeamsComparator.compareForSorting());
 		map.addAttribute("teams", teams);
+
+		Player mvp = gameService.getMvp(owner);
+		map.addAttribute("mvp", mvp);
 
 		StringBuilder companyPresidiumComment = new StringBuilder();
 		for (int i = 0; i < teams.size(); i++) {
@@ -395,6 +420,7 @@ public class GameController {
 					case 0:
 						companyPresidiumComment.append("RING! is yours! You are a true legend! Ring is forever and fame will never die! ");
 						//create ring
+						gameService.addRing(owner, userTeam, season);
 						break;
 					case 1:
 						companyPresidiumComment.append("SILVER! Congrats! You are skilled enough to become a legend!");
@@ -427,12 +453,13 @@ public class GameController {
 	/**
 	 * reload teams with new opponents
 	 * update contracts for players
-	 * set new round*
+	 * set new round
+	 *
 	 * @param response
 	 * @throws IOException
 	 */
 	@PostMapping("/game/awards")
-	public void finishSeason(HttpServletResponse response) throws IOException {
+	public void finishSeason(HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
 		setNextRoundMatches();
 		response.sendRedirect("/game/team");
 	}
@@ -442,10 +469,14 @@ public class GameController {
 //		return "player";
 //	}
 
-//	@GetMapping("/game/coach")
-//	public String getCoachPage() {
-//		return "coach";
-//	}
+	@GetMapping("/game/rings")
+	public String getCoachPage(ModelMap map) {
+//		gameService.addRing(owner, userTeam, season);
+		List<Ring> ringsByOwner = gameService.getRingsByOwner(owner);
+		map.addAttribute("rings", ringsByOwner);
+
+		return "rings";
+	}
 
 
 	//HELPERS
@@ -502,19 +533,36 @@ public class GameController {
 
 		Map<Team, List<Team>> opponents = new HashMap<>();
 
-		boolean isNewSeason = gameService.getMaxLeftOpponentsFromAllTeams() == 0;
+		boolean isNewSeason = gameService.getMaxLeftOpponentsFromAllTeams(owner) == 0;
 
 		if (isNewSeason) {
+
+			season++;
+
 			teams.forEach(team -> opponents.put(team, new LinkedList<>()));
 			for (Map.Entry<Team, List<Team>> entry : opponents.entrySet()) {
 				teams.forEach(team -> {
+
+					team.resetForNewSeason();
+
+					gameService.getPlayersByTeam(team).forEach(Player::resetForNewSeason);
+
 					if (team != entry.getKey()) {
 						entry.getValue().add(team);
 					}
 				});
 			}
 		} else {
-			teams.forEach(team -> opponents.put(team, team.getLeftOpponents()));
+
+			teams.forEach(team -> {
+
+				opponents.put(team, team.getLeftOpponents());
+
+				gameService.getPlayersByTeam(team).forEach(player -> {
+					player.updateValuesAfterLastGame();
+					player.setStatusAfterLastGame("noGame");
+				});
+			});
 		}
 
 		createMatchesForNextRound(usedTeams, opponents);

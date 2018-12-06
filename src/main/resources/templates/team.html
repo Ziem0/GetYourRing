@@ -8,9 +8,11 @@
 
 <h1>team page</h1>
 
-<a href="/game/trade">trade</a>
-<a href="/game/table">table</a>
-<a href="/game/matches">match</a>
+<h2 th:text="'Official NBA ' + ${season} + ' season'"></h2>
+
+<button><a href="/game/trade">trade</a></button>
+<button><a href="/game/table">table</a></button>
+<button><a href="/game/matches">match</a></button>
 
 <tr th:each="player : ${players}">
     <td th:text="${player.getName()}">name</td>
@@ -37,9 +39,15 @@
 </tr>
 
 
+<button><a href="/game/rings">YOUR RINGS</a></button>
+
+<button><a href="/game/intro">READ RULES</a></button>
+
 <form name="logoutForm" th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>
 </form>
+
+
 
 </body>
 </html>
