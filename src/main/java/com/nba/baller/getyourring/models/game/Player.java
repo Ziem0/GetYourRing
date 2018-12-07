@@ -38,7 +38,6 @@ public class Player {
 
 	private String statusAfterLastGame;
 
-
 	public Player() {
 	}
 

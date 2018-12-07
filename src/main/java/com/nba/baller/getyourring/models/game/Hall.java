@@ -47,7 +47,7 @@ public class Hall {
 	}
 
 	public int setRandomCrowdFactor() {
-		return this.crowdFactor = new Random().nextInt(13 - 6) + 1;
+		return this.crowdFactor = new Random().nextInt(13 - 5) + 5;
 	}
 
 	public boolean setIsCrowdFactorHome() {

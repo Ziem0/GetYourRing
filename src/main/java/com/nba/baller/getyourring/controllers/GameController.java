@@ -43,6 +43,9 @@ public class GameController {
 
 	private Integer season;
 
+	private int tradesCounter;
+
+	private String tradeInfo;
 
 	final
 	UserService userService;
@@ -149,6 +152,12 @@ public class GameController {
 
 		List<Player> players = gameService.getPlayersByTeam(userTeam);
 		Coach coach = gameService.getCoachByTeam(userTeam);
+
+//		tradesCounter = 1;
+//		tradeInfo = "sraczka";
+
+		map.addAttribute("tradeInfo", tradeInfo);
+		map.addAttribute("tradesCounter", tradesCounter);
 
 		map.addAttribute("players", players);
 		map.addAttribute("coach", coach);
@@ -453,7 +462,7 @@ public class GameController {
 	 * @throws IOException
 	 */
 	@PostMapping("/game/awards")
-	public void finishSeason(HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
+	public void finishSeason(HttpServletResponse response) throws IOException {
 		setNextRoundMatches();
 		response.sendRedirect("/game/team");
 	}
@@ -466,6 +475,10 @@ public class GameController {
 	@GetMapping("/game/rings")
 	public String getRingsPage(ModelMap map) {
 		List<Ring> ringsByOwner = gameService.getRingsByOwner(owner);
+
+		boolean isAnyRing = ringsByOwner.size() > 0;
+
+		map.addAttribute("isAnyRing", isAnyRing);
 		map.addAttribute("rings", ringsByOwner);
 
 		return "rings";
@@ -473,15 +486,122 @@ public class GameController {
 
 	@GetMapping("/game/trade")
 	public String getTradePage(ModelMap map) {
-		
+		//exclude team if it's your next opponent
+
+		List<Player> myPlayers = gameService.getPlayersByTeam(userTeam);
+		List<Player> availablePlayersToTrade = new ArrayList<>();
+		String nextOpponent = null;
+
+		for (Match nextRoundMatch : nextRoundMatches) {
+			if (nextRoundMatch.getTeamOne().getName().equals(userTeam.getName())) {
+				nextOpponent = nextRoundMatch.getTeamTwo().getName();
+				break;
+			} else if (nextRoundMatch.getTeamTwo().getName().equals(userTeam.getName())) {
+				nextOpponent = nextRoundMatch.getTeamOne().getName();
+				break;
+			}
+		}
+
+		String finalNextOpponent = nextOpponent;
+		teams.forEach(t -> {
+			if (!t.getName().equals(userTeam.getName()) && !t.getName().equals(finalNextOpponent)) {
+				List<Player> playersByTeam = gameService.getPlayersByTeam(t);
+				availablePlayersToTrade.addAll(playersByTeam);
+			}
+		});
+
+		map.addAttribute("myPlayers", myPlayers);
+		map.addAttribute("availablePlayersToTrade", availablePlayersToTrade);
 
 		return "trade";
+	}
+
+	/**
+	 * create players to trade based on given playerId
+	 * init trade mechanic
+	 * increase tradeCounter
+	 * after all redirect to /game/team
+	 * @param response
+	 * @param playerId
+	 * @throws IOException
+	 */
+	@PostMapping("/game/trade")
+	public void tradeMaker(HttpServletResponse response, Integer playerId) throws IOException {
+
+
+		Player wantedPlayer = gameService.getPlayerById(playerId).get();
+
+		Player myPlayer = gameService.getPlayersByTeam(userTeam)
+				.stream().filter(p -> p.getPosition() == wantedPlayer.getPosition())
+				.iterator().next();
+
+		if (isTradeDone(wantedPlayer, myPlayer)) {
+			tradeInfo = "Trade is done. Good job!";
+		} else {
+			tradeInfo = "Teams did not come to an agreement. You lost one chance to trade.";
+		}
+
+		tradesCounter++;
+		response.sendRedirect("/game/team");
 	}
 
 	//HELPERS
 	//if session expired, return to login page
 	//HttpSession only for Owner's purposes; not check if session expired
 	//responsible for that is SpringSecurity
+
+	/**
+	 * trade mechanics
+	 * @param wantedPlayer
+	 * @param myPlayer
+	 * @return
+	 */
+	private boolean isTradeDone(Player wantedPlayer, Player myPlayer) {
+		int overallDifference = wantedPlayer.getOverall() - myPlayer.getOverall();
+		int contractsDifference = wantedPlayer.getContractValue() - myPlayer.getContractValue();
+
+		if (Math.abs(contractsDifference) > 3) {
+			return false;
+		} else {
+			Team opponentTeam = wantedPlayer.getTeam();
+
+			//If you obtain player with higher overall and lower contract
+			if (overallDifference > 0 && contractsDifference < 0) {
+				boolean isDone = new Random().nextBoolean();
+				if (isDone) {
+					return makeExchange(wantedPlayer, myPlayer, opponentTeam);
+				} else {
+					return false;
+				}
+				//If you obtain player with lower overall and higher contract
+			} else if (overallDifference < 0 && contractsDifference > 0) {
+				boolean isUserNewPlayerBoosted = Arrays.asList(false, false, false, false, false, true, false, false, false, false)
+						.get(new Random().nextInt(10));
+				if (isUserNewPlayerBoosted) {
+					wantedPlayer.setOverall(wantedPlayer.getOverall() + new Random().nextInt(contractsDifference) + 1);
+				}
+			}
+			return makeExchange(wantedPlayer, myPlayer, opponentTeam);
+		}
+	}
+
+	/**
+	 * set new team for traded players and update players
+	 */
+	private boolean makeExchange(Player wantedPlayer, Player myPlayer, Team opponentTeam) {
+//		int wantedPlayerOrderId = wantedPlayer.getToSort();
+//		int myPlayerOrderId = myPlayer.getToSort();
+//
+//		myPlayer.setToSort(wantedPlayerOrderId);
+//		wantedPlayer.setToSort(myPlayerOrderId);
+
+		wantedPlayer.setTeam(userTeam);
+		myPlayer.setTeam(opponentTeam);
+
+		gameService.savePlayer(wantedPlayer);
+		gameService.savePlayer(myPlayer);
+		return true;
+	}
 
 	/**
 	 * handle httpSession
@@ -508,6 +628,10 @@ public class GameController {
 		});
 	}
 
+	/**
+	 * set user's team based on given team name
+	 * @param team
+	 */
 	private void setTeamForNewUser(String team) {
 		teams.forEach(t -> {
 			if (t.getName().equals(team)) {
@@ -525,6 +649,9 @@ public class GameController {
 	 * update opponents map with available teams based on isNewSeason
 	 */
 	private void setNextRoundMatches() {
+
+		tradeInfo = null;
+		tradesCounter = 0;
 
 		nextRoundMatches = new LinkedList<>();
 

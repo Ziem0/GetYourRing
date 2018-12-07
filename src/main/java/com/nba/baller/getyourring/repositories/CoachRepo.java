@@ -9,9 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CoachRepo extends CrudRepository<Coach, String> {
 
-//	@Query(value = "select c from Coach c where c.name=:deliveredCoachName")
-//	Coach getCoachByTeam(@Param("deliveredCoachName") String deliveredCoachName);
-
 	@Query(value = "select c from Coach c where c=:deliveredCoach")
 	Coach getCoachByTeam(@Param("deliveredCoach") Coach deliveredCoach);
 }

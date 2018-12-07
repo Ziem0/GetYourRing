@@ -18,20 +18,25 @@
     The game is half-roguelike half-manager.
     So you have a real influence on the fate but keep in mind there are a few things you can't control!
 
-    Rules:
+    Description:
     League contains 6 teams with 5 players and coach.
     You have to pick your team. You can not change your team during the game.
     Each player has an overall(1-5), changing after each game in the season (+-1).
 
-    After each game you can trade one player.
+    Trades:
+    After each game you have 2 chances to trade players.
     Trades are based on player's position and the contract's value (3-10 mln $)
-    Trade is allowed when:
-        -players have the same position
-        -difference between players' contracts is max 3 mln $
-    If you obtain player with higher overall and lower contract then trade has 50/50 chance to be done. If so, opponent's overall will be randomly changed.
-    If you obtain player with lower overall and higher contract then your player's overall or opponent's player overall will be changed based on difference between traded players' contracts (0-difference)
+    You can't trade player if he is your next opponent.
+    Trade is allowed when difference between players' contracts is max 3 mln $
+    If you obtain player with higher overall and lower contract
+        then trade has 50/50 chance to be done.
+        If trade is done, opponent's overall will be randomly changed.
+    If you obtain player with lower overall and higher contract
+        then there is a 10% chance your new player's overall
+        will be increased based on difference between traded players' contracts (0-difference).
     In other cases simply trade is done.
 
+    Match:
     The match consists of five mini battles based on players' positions and their overall.
     During each mini battle, every overall is multiplied by 6.
     For example:
@@ -45,11 +50,13 @@
     activates a crowd factor which means a random team will get a random amount of points (6-12)
     Home team has a higher chance to get the boost.
 
+    If all battles are done and the score is equal, coaches's special boost value is valid.
+    So if home coach has a higher value, home team win.
+    Otherwise, crowd lottery is valid. Bear in mind that a chance to win for a home team is higher (60%/40%)
+
+    Coach:
     Coach has one special ability. He changes overall for specified position (+-1).
     The position is randomly changed after each game.
-
-    If all battles are done and the score is equal, coaches's special boost value is valid.
-    If these values are equal, crowd factor is valid, which means it is lottery!
 
     That's all!
 

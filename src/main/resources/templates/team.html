@@ -10,7 +10,12 @@
 
 <h2 th:text="'Official NBA ' + ${season} + ' season'"></h2>
 
-<button><a href="/game/trade">trade</a></button>
+<h3 th:if="${tradeInfo} != null" th:text="${tradeInfo}">tradeInfo</h3>
+
+<div th:if="${tradesCounter}!=2">
+    <button><a href="/game/trade">trade</a></button>
+</div>
+
 <button><a href="/game/table">table</a></button>
 <button><a href="/game/matches">match</a></button>
 

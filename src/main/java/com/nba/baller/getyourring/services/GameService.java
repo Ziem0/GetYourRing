@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GameService {
@@ -88,6 +89,14 @@ public class GameService {
 
 	public List<Ring> getRingsByOwner(Owner owner) {
 		return ringRepo.getRingsByOwner(owner);
+	}
+
+	public Optional<Player> getPlayerById(Integer id) {
+		return playerRepo.findById(id);
+	}
+
+	public void savePlayer(Player player) {
+		playerRepo.save(player);
 	}
 
 	//add all needed items for new player
@@ -214,5 +223,6 @@ public class GameService {
 		Player lamarcus_aldridge = new Player("Lamarcus Aldridge", Position.C, san_antonio_spurs);
 		playerRepo.save(lamarcus_aldridge);
 	}
+
 
 }

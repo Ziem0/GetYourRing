@@ -8,11 +8,11 @@
 
 <h1>Rings page</h1>
 
-<div th:if="${rings} == null">
+<div th:if="${isAnyRing} == false">
     <h3>You have no rings so far!</h3>
     <h3>You must try harder!</h3>
 </div>
-<div th:unless="${rings} == null">
+<div th:unless="${isAnyRing} == false">
     <table>
         <tr>
             <th>No.</th>
