@@ -1,5 +1,6 @@
 package com.nba.baller.getyourring.services;
 
+import com.nba.baller.getyourring.helpers.HandleComparator;
 import com.nba.baller.getyourring.helpers.Position;
 import com.nba.baller.getyourring.models.Owner;
 import com.nba.baller.getyourring.models.game.*;
@@ -58,7 +59,9 @@ public class GameService {
 	}
 
 	public List<Player> getPlayersByTeam(Team team) {
-		return playerRepo.getPlayersByTeam(team);
+		List<Player> players = playerRepo.getPlayersByTeam(team);
+		players.sort(HandleComparator.comparePlayersByPosition());
+		return players;
 	}
 
 	public Coach getCoachByTeam(Team team) {

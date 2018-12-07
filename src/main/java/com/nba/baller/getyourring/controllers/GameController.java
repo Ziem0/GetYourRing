@@ -1,6 +1,6 @@
 package com.nba.baller.getyourring.controllers;
 
-import com.nba.baller.getyourring.helpers.TeamsComparator;
+import com.nba.baller.getyourring.helpers.HandleComparator;
 import com.nba.baller.getyourring.models.Owner;
 import com.nba.baller.getyourring.models.game.*;
 import com.nba.baller.getyourring.services.GameService;
@@ -151,10 +151,9 @@ public class GameController {
 		map.addAttribute("season", season);
 
 		List<Player> players = gameService.getPlayersByTeam(userTeam);
-		Coach coach = gameService.getCoachByTeam(userTeam);
 
-//		tradesCounter = 1;
-//		tradeInfo = "sraczka";
+
+		Coach coach = gameService.getCoachByTeam(userTeam);
 
 		map.addAttribute("tradeInfo", tradeInfo);
 		map.addAttribute("tradesCounter", tradesCounter);
@@ -392,7 +391,7 @@ public class GameController {
 	@GetMapping("/game/table")
 	public String getTablePage(ModelMap map) {
 
-		teams.sort(TeamsComparator.compareForSorting());
+		teams.sort(HandleComparator.compareForSorting());
 
 		map.addAttribute("teams", teams);
 
@@ -410,7 +409,7 @@ public class GameController {
 	@GetMapping("/game/awards")
 	public String getAwardsPage(ModelMap map) {
 
-		teams.sort(TeamsComparator.compareForSorting());
+		teams.sort(HandleComparator.compareForSorting());
 		map.addAttribute("teams", teams);
 
 		Player mvp = gameService.getMvp(owner);
