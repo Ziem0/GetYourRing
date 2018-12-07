@@ -28,20 +28,10 @@ public class GetYourRingApplication {
 	public CommandLineRunner demo() {
 		return (args) -> {
 
-			Owner owner1 = new Owner("ziemo", "1212", "ziemo@email.pl");
-			ownerRepo.save(owner1);
-			Roles role1 = new Roles(owner1, Role.ROLE_USER);
+			Owner admin = new Owner("ziemo", "1212", "andrzejewski.ziemowit@gmail.com");
+			ownerRepo.save(admin);
+			Roles role1 = new Roles(admin, Role.ROLE_ADMIN);
 			roleRepo.save(role1);
-			Owner owner2 = new Owner("nina", "1212", "nina@email.pl");
-			ownerRepo.save(owner2);
-			Roles role2 = new Roles(owner2, Role.ROLE_ADMIN);
-			roleRepo.save(role2);
-
-//			Match match1 = new Match(new Date(), boston_celtics, boston_celtics, 90, 91);
-//			matchRepo.save(match1);
-//
-//			Ring ring = new Ring(new Date(), match1, owner1);
-//			ringRepo.save(ring);
 		};
 	}
 

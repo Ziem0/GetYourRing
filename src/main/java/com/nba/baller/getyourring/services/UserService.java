@@ -9,6 +9,8 @@ import com.nba.baller.getyourring.repositories.SessionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -52,12 +54,21 @@ public class UserService {
 	}
 
 
+	//ADMIN SECTION
 
+	/**
+	 * find all owners for Admin purposes
+	 * @return
+	 */
+	public Iterable<Owner> getAllOwners() {
+		return ownerRepo.findAll();
+	}
+
+	public Optional<Owner> getUserById(String id) {
+		return ownerRepo.findById(id);
+	}
 
 
 //check if given sessionId is correct; sessionId != primaryId
-//	public GameSession getSessionBySessionId(String sessionId) {
-//		return sessionRepo.getSessionBySessionId(sessionId);
-//	}
 
 }

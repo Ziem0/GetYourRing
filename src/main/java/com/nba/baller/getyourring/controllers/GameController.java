@@ -359,10 +359,14 @@ public class GameController {
 	 */
 	@PostMapping("/game/matches")
 	public void finishRound(HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
+
 		isPageReload = false;
+
 		boolean isSeasonEnd = gameService.getMaxLeftOpponentsFromAllTeams(owner) == 0;
+
 		if (isSeasonEnd) {
 			response.sendRedirect("/game/awards");
+
 		} else {
 			setNextRoundMatches();
 			response.sendRedirect("/game/team");
@@ -378,15 +382,12 @@ public class GameController {
 	 */
 	@GetMapping("/game/table")
 	public String getTablePage(ModelMap map) {
+
 		teams.sort(TeamsComparator.compareForSorting());
+
 		map.addAttribute("teams", teams);
 
 		return "table";
-	}
-
-	@GetMapping("/game/trade")
-	public String getTradePage(ModelMap map) {
-		return "trade";
 	}
 
 	/**
@@ -399,13 +400,6 @@ public class GameController {
 	 */
 	@GetMapping("/game/awards")
 	public String getAwardsPage(ModelMap map) {
-		//create player generally statistics?
-		//create mvp based won battles by player and won games(list position) as a team read from database
-
-		//add new button for special events in game
-		//addition display for special coach value and crowd effect and overtime
-		//mark player which has been boosted by a coach
-
 
 		teams.sort(TeamsComparator.compareForSorting());
 		map.addAttribute("teams", teams);
@@ -464,20 +458,25 @@ public class GameController {
 		response.sendRedirect("/game/team");
 	}
 
-//	@GetMapping("/game/player")
-//	public String getPlayerPage() {
-//		return "player";
-//	}
-
+	/**
+	 * load all rings by user
+	 * @param map
+	 * @return
+	 */
 	@GetMapping("/game/rings")
-	public String getCoachPage(ModelMap map) {
-//		gameService.addRing(owner, userTeam, season);
+	public String getRingsPage(ModelMap map) {
 		List<Ring> ringsByOwner = gameService.getRingsByOwner(owner);
 		map.addAttribute("rings", ringsByOwner);
 
 		return "rings";
 	}
 
+	@GetMapping("/game/trade")
+	public String getTradePage(ModelMap map) {
+		
+
+		return "trade";
+	}
 
 	//HELPERS
 	//if session expired, return to login page
