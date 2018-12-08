@@ -14,4 +14,8 @@ public interface RingRepo extends CrudRepository<Ring, Integer> {
 
 	@Query(value = "select r from Ring r where r.owner=:deliveredOwner")
 	List<Ring> getRingsByOwner(@Param("deliveredOwner") Owner deliveredOwner);
+
+	@Query(value = "select r.owner || '' , count(r) from Ring r group by r.owner")
+	List<Object[]> getTop10Data();
+
 }

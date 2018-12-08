@@ -18,6 +18,7 @@
 
 <button><a href="/game/table">table</a></button>
 <button><a href="/game/matches">match</a></button>
+<button><a href="/game/rings">YOUR RINGS</a></button>
 
 <tr th:each="player : ${players}">
     <td th:text="${player.getName()}">name</td>
@@ -43,10 +44,8 @@
     <br>
 </tr>
 
-
-<button><a href="/game/rings">YOUR RINGS</a></button>
-
 <button><a href="/game/intro">READ RULES</a></button>
+<button><a href="/game/top10">TOP10</a></button>
 
 <form name="logoutForm" th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>

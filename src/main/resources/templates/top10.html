@@ -4,10 +4,33 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>logging</title>
+    <title>top 10</title>
 </head>
 <body>
 
+    <h1>Top 10</h1>
+
+    <div th:if="${#lists.isEmpty(top10data)}">
+        <h2>The list has no records. Be the first ring owner</h2>
+    </div>
+
+    <div th:unless="${#lists.isEmpty(top10data)}">
+
+        <table>
+            <tr>
+                <th>User</th>
+                <th>Rings</th>
+            </tr>
+
+            <tr th:each="record : ${top10}">
+                <th th:text="${record[0]}"></th>
+                <th th:text="${record[1]}"></th>
+            </tr>
+
+        </table>
+    </div>
+
+    <button><a href="/game/team">BACK</a></button>
 
 </body>
 </html>

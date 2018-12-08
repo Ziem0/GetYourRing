@@ -483,9 +483,15 @@ public class GameController {
 		return "rings";
 	}
 
+	/**
+	 * check next opponent
+	 * set my current players and available players(without players which belongs to next opponent)
+	 * pass myPlayers and availablePlayers to trade.html
+	 * @param map
+	 * @return
+	 */
 	@GetMapping("/game/trade")
 	public String getTradePage(ModelMap map) {
-		//exclude team if it's your next opponent
 
 		List<Player> myPlayers = gameService.getPlayersByTeam(userTeam);
 		List<Player> availablePlayersToTrade = new ArrayList<>();
@@ -527,7 +533,6 @@ public class GameController {
 	@PostMapping("/game/trade")
 	public void tradeMaker(HttpServletResponse response, Integer playerId) throws IOException {
 
-
 		Player wantedPlayer = gameService.getPlayerById(playerId).get();
 
 		Player myPlayer = gameService.getPlayersByTeam(userTeam)
@@ -537,11 +542,27 @@ public class GameController {
 		if (isTradeDone(wantedPlayer, myPlayer)) {
 			tradeInfo = "Trade is done. Good job!";
 		} else {
-			tradeInfo = "Teams did not come to an agreement. You lost one chance to trade.";
+			tradeInfo = "Teams did not come to an agreement. You have last chance to trade before next game.";
 		}
 
 		tradesCounter++;
 		response.sendRedirect("/game/team");
+	}
+
+	/**
+	 * get info about looted rings sorted by username
+	 * pass list with data to top10.html
+	 * @param map
+	 * @return
+	 */
+	@GetMapping("/game/top10")
+	public String getTop10(ModelMap map) {
+
+		List<Object[]> top10data = gameService.getTop10Data();
+
+		map.addAttribute("top10data", top10data);
+
+		return "top10";
 	}
 
 	//HELPERS
@@ -588,12 +609,6 @@ public class GameController {
 	 * set new team for traded players and update players
 	 */
 	private boolean makeExchange(Player wantedPlayer, Player myPlayer, Team opponentTeam) {
-//		int wantedPlayerOrderId = wantedPlayer.getToSort();
-//		int myPlayerOrderId = myPlayer.getToSort();
-//
-//		myPlayer.setToSort(wantedPlayerOrderId);
-//		wantedPlayer.setToSort(myPlayerOrderId);
-
 		wantedPlayer.setTeam(userTeam);
 		myPlayer.setTeam(opponentTeam);
 
@@ -738,3 +753,7 @@ public class GameController {
 
 }
 
+//todo:
+//rozczytanie mechaniki
+//css
+//need static content reader!

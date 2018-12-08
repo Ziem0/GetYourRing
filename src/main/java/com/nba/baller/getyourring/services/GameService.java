@@ -102,6 +102,10 @@ public class GameService {
 		playerRepo.save(player);
 	}
 
+	public List<Object[]> getTop10Data() {
+		return ringRepo.getTop10Data();
+	}
+
 	//add all needed items for new player
 	public void addNewGameContent(Owner owner) {
 
