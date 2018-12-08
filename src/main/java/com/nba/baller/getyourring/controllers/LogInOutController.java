@@ -5,9 +5,12 @@ import com.nba.baller.getyourring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Controller
@@ -17,15 +20,32 @@ public class LogInOutController {
 	@Autowired
 	UserService userService;
 
+
 	@GetMapping("{path}")
-	public void redirect(HttpServletResponse response, @PathVariable String path) throws IOException {
+	public void redirect2(HttpServletResponse response, @PathVariable String path) throws IOException {
 		response.sendRedirect("/home");
 	}
 
+	/**
+	 * page with links to:
+	 * -login page
+	 * -create new account page
+	 *
+	 * @return
+	 */
 	@GetMapping("/home")
-	public String home() {
-		//page with link to login page
-		//page with link to create page
+	public String home(HttpServletRequest request, ModelMap map) {
+
+		boolean isSessionExpired = false;
+
+		HttpSession session = request.getSession();
+
+		if (session.isNew()) {
+			isSessionExpired = true;
+		}
+
+		map.addAttribute("isSessionExpired", isSessionExpired);
+
 		return "home";
 	}
 
@@ -50,13 +70,13 @@ public class LogInOutController {
 		if (errorOrNull == null) {
 			model.addAttribute("message", "ok");
 		}
+
 		return "login";
 	}
 
-	//should be on each page as navi
-	@GetMapping("/logout")
-	public String logoutProcess() {
-		return "logout";
-	}
+//	@GetMapping("/logout")
+//	public String logoutProcess() {
+//		return "logout";
+//	}
 
 }

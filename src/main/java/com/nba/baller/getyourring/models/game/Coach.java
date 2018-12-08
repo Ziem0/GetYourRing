@@ -27,6 +27,7 @@ public class Coach {
 	@Transient
 	private Position boostedPosition;
 
+
 	public Coach() {
 	}
 

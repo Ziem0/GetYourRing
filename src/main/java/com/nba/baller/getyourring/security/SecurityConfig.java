@@ -52,14 +52,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.hasRole("USER")
 //				.antMatchers("/home")
 //					.anonymous()  --> don't let to open home page when being logged
-				.anyRequest()
-					.permitAll()
+//				.anyRequest()
+//					.permitAll()
 				.and()
 				.formLogin()
 					.loginPage("/login")
 				.and()
 				.logout()
-					.logoutUrl("/logout")
+//					.logoutUrl("/logout")
 					.logoutSuccessUrl("/home")
 					.invalidateHttpSession(true)    //!!!
 					.deleteCookies("JSESSIONID")

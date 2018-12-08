@@ -32,15 +32,16 @@ public class GameSession {
 	private String user;
 
 	public GameSession() {
+
 	}
 
-		public GameSession(String id, String sessionId, BigInteger creationTime, BigInteger lastAccessTime, Integer maxInactiveInterval, BigInteger expiryTime, String user) {
-		this.id = id;
-		this.sessionId = sessionId;
-		this.creationTime = creationTime;
-		this.lastAccessTime = lastAccessTime;
-		this.maxInactiveInterval = maxInactiveInterval;
-		this.expiryTime = expiryTime;
-		this.user = user;
+	public GameSession(String id, String sessionId, BigInteger creationTime, BigInteger lastAccessTime, Integer maxInactiveInterval, BigInteger expiryTime, String user) {
+	this.id = id;
+	this.sessionId = sessionId;
+	this.creationTime = creationTime;
+	this.lastAccessTime = lastAccessTime;
+	this.maxInactiveInterval = maxInactiveInterval;
+	this.expiryTime = expiryTime;
+	this.user = user;
 	}
 }

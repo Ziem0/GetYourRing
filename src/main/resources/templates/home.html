@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -10,7 +10,16 @@
     <p>info about game</p>
     <p>links to login and createAccount</p>
 
-    <a href="/create">create new account</a>
+    <div th:if="${isSessionExpired} == true">
+        <a href="/create">create new account</a>
+    </div>
+
+    <div th:unless="${isSessionExpired} == true">
+        <form name="logoutForm" th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </div>
+
     <a href="/game">login to your account</a>
 
 </body>

@@ -40,7 +40,8 @@ public class UserService {
 	}
 
 	/**
-	 * update owner to database after password encode
+	 * save owner in database after password encode
+	 * additional encode is needed as owner is received by @ModelAttribute
 	 * referral ROLE_USER to given owner
 	 * save role to database
 	 * @param owner
@@ -49,12 +50,18 @@ public class UserService {
 		owner.setEncodedPassword();
 		ownerRepo.save(owner);
 
-		Roles roles = new Roles(owner, Role.ROLE_USER);
-		roleRepo.save(roles);
+		Roles role = new Roles(owner, Role.ROLE_USER);
+		roleRepo.save(role);
 	}
 
+//ADMIN SECTION
 
-	//ADMIN SECTION
+	public void saveAdmin(Owner admin) {
+		ownerRepo.save(admin);
+
+		Roles role = new Roles(admin, Role.ROLE_ADMIN);
+		roleRepo.save(role);
+	}
 
 	/**
 	 * find all owners for Admin purposes
@@ -67,6 +74,7 @@ public class UserService {
 	public Optional<Owner> getUserById(String id) {
 		return ownerRepo.findById(id);
 	}
+
 
 
 //check if given sessionId is correct; sessionId != primaryId

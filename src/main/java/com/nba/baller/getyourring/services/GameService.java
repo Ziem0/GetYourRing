@@ -48,8 +48,6 @@ public class GameService {
 		this.hallRepo = hallRepo;
 	}
 
-
-
 	public List<Team> getTeamsByOwner(Owner owner) {
 		return teamRepo.getTeamsByOwner(owner);
 	}

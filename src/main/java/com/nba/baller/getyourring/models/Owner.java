@@ -17,7 +17,7 @@ import javax.persistence.Id;
 @Setter
 public class Owner {
 
-	@Column(unique = true,nullable = false)
+	@Column(unique = true, nullable = false)
 	@Id
 	private String username;
 
@@ -27,7 +27,7 @@ public class Owner {
 	@Column(nullable = false)
 	private Boolean enabled = true;
 
-	@Column(unique = true,nullable = false)
+	@Column(unique = true, nullable = false)
 	private String email;
 
 	public Owner() {
@@ -40,8 +40,7 @@ public class Owner {
 	}
 
 	public void setEncodedPassword() {
-		String encodedPassword = this.passwordEncoder().encode(this.getPassword());
-		this.password = encodedPassword;
+		this.password = this.passwordEncoder().encode(this.getPassword());
 	}
 
 	@Bean

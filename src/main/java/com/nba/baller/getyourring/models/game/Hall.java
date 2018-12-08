@@ -51,7 +51,8 @@ public class Hall {
 	}
 
 	public boolean setIsCrowdFactorHome() {
-		boolean isHomeBoost = Arrays.asList(true, false, true, false, true).get(new Random().nextInt(5));
+		boolean isHomeBoost = Arrays.asList(true, false, true, false, true).get(new Random()
+				.nextInt(5));
 		return isHomeBoost;
 	}
 }

@@ -73,7 +73,7 @@ public class GameController {
 	 */
 	@GetMapping("/game")
 	public void game(HttpServletResponse response,
-	                 HttpServletRequest request) throws IOException, ServletException {
+	                 HttpServletRequest request) throws IOException {
 
 		isOwnerNew = false;
 		setOwner(getOwner(request));
@@ -754,6 +754,7 @@ public class GameController {
 }
 
 //todo:
+// refactor .java and .html
 //rozczytanie mechaniki
 //css
 //need static content reader!

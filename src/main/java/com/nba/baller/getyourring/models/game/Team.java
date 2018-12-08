@@ -75,7 +75,7 @@ public class Team {
 	}
 
 	public void setWin() {
-		this.wins += 1;
+		this.wins ++;
 	}
 
 	public void setSeasonGamesPlayed() {
