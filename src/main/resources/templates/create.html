@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:replace="template :: header"></head>
 <body>
 
     <h1>create page</h1>
@@ -17,5 +14,6 @@
         <input type="email" name="email" th:field="*{email}">
         <input type="submit" value="login">
     </form>
+    <div th:replace="template :: footer"></div>
 </body>
 </html>

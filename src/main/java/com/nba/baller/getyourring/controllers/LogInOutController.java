@@ -10,16 +10,20 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/")
 public class LogInOutController {
 
 	@Autowired
 	UserService userService;
 
+
+	@GetMapping("/")
+	public void redirect1(HttpServletResponse response) throws IOException {
+		response.sendRedirect("/home");
+	}
 
 	@GetMapping("{path}")
 	public void redirect2(HttpServletResponse response, @PathVariable String path) throws IOException {
@@ -30,28 +34,25 @@ public class LogInOutController {
 	 * page with links to:
 	 * -login page
 	 * -create new account page
+	 * create new account only in case user is logged out
 	 *
 	 * @return
 	 */
 	@GetMapping("/home")
 	public String home(HttpServletRequest request, ModelMap map) {
 
-		boolean isSessionExpired = false;
-
-		HttpSession session = request.getSession();
-
-		if (session.isNew()) {
-			isSessionExpired = true;
-		}
+		boolean isSessionExpired = userService.isSessionExpired(request);
 
 		map.addAttribute("isSessionExpired", isSessionExpired);
 
 		return "home";
 	}
 
+
+
+	//create account and redirect to login page
 	@GetMapping("/create")
 	public String createAccount(@ModelAttribute Owner owner) {
-		//create account and redirect to login page
 		return "create";
 	}
 

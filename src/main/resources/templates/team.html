@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>intro</title>
-</head>
+<head th:replace="template :: header"></head>
 <body>
+
+<div th:replace="template :: nav"></div>
 
 <h1>team page</h1>
 
@@ -45,13 +44,7 @@
 </tr>
 
 <button><a href="/game/intro">READ RULES</a></button>
-<button><a href="/game/top10">TOP10</a></button>
 
-<form name="logoutForm" th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
-
-
-
+<div th:replace="template :: footer"></div>
 </body>
 </html>

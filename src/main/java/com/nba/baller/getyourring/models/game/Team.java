@@ -45,6 +45,9 @@ public class Team {
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Team> leftOpponents;
 
+	@OneToOne
+	private Match lastMatch;
+
 	public Team() {
 	}
 
@@ -59,9 +62,10 @@ public class Team {
 		this.plusMinus = 0;
 		this.leftOpponents = new LinkedList<>();
 		this.seasonGamesPlayed = 0;
+		this.lastMatch = null;
 	}
 
-	public Team(String name, Hall hall, City city, Coach coach, Owner owner, Boolean controlledByPlayer, Integer wins, Integer plusMinus, List<Team> leftOpponents, Integer seasonGamesPlayed) {
+	public Team(String name, Hall hall, City city, Coach coach, Owner owner, Boolean controlledByPlayer, Integer wins, Integer plusMinus, List<Team> leftOpponents, Integer seasonGamesPlayed, Match lastMatch) {
 		this.name = name;
 		this.hall = hall;
 		this.city = city;
@@ -72,6 +76,7 @@ public class Team {
 		this.plusMinus = plusMinus;
 		this.leftOpponents = leftOpponents;
 		this.seasonGamesPlayed = seasonGamesPlayed;
+		this.lastMatch = lastMatch;
 	}
 
 	public void setWin() {

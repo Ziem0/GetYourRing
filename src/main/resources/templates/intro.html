@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>intro</title>
-</head>
+<head th:replace="template :: header"></head>
 <body>
+
 
 <h1>intro page</h1>
 
@@ -77,6 +75,6 @@
 <div th:unless="${isOwnerNew} == true">
     <a href="/game/team">Let's start game!</a>
 </div>
-
+<div th:replace="template :: footer"></div>
 </body>
 </html>

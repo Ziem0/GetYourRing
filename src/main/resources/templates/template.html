@@ -1,11 +1,25 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="header">
-    <!--<title th:text="${title}">Default</title>-->
-    <title th:text="logout">Default</title>
+    <title th:text="${title}"></title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!--<title th:text="logout">Default</title>-->
 </head>
 
-<p>navi with logout option</p>
+<div class="nav" th:fragment="nav">
+    <h4>demo NaviBar</h4>
+    <ul>
+        <li><a href="/game/top10">top10</a></li>
+        <li>
+            <form name="logoutForm" th:action="@{/logout}" method="post">
+                <input type="submit" value="Sign Out"/>
+            </form>
+        </li>
+
+    </ul>
+</div>
+
+
 <footer th:fragment="foot">&copy; Ziemo Andrzejewski 2018</footer>
 
 </html>

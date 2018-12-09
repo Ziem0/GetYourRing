@@ -2,12 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="template :: header"></head>
 <body>
+
     <h1>LOGOUT</h1>
 
     <form name="logoutForm" th:action="@{/logout}" method="post">
         <input type="submit" value="Sign Out"/>
     </form>
-
+    <div th:replace="template :: footer"></div>
 </body>
 </html>
 

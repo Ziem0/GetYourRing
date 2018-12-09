@@ -1,14 +1,9 @@
-<!--referal to create new account-->
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>top 10</title>
-</head>
+<head th:replace="template :: header"></head>
 <body>
 
-    <h1>Top 10</h1>
+    <h1>Top10</h1>
 
     <div th:if="${#lists.isEmpty(top10data)}">
         <h2>The list has no records. Be the first ring owner</h2>
@@ -32,5 +27,6 @@
 
     <button><a href="/game/team">BACK</a></button>
 
+    <div th:replace="template :: footer"></div>
 </body>
 </html>

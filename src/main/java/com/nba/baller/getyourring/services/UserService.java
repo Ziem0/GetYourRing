@@ -9,6 +9,8 @@ import com.nba.baller.getyourring.repositories.SessionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Service
@@ -28,6 +30,7 @@ public class UserService {
 		this.sessionRepo = sessionRepo;
 	}
 
+
 	/**
 	 * check if given sessionId is correct
 	 * warning:sessionId != primaryId
@@ -35,6 +38,7 @@ public class UserService {
 	 * @return owner -> if owner has account
 	 */
 	public Owner getOwnerBySessionId(String sessionId) {
+
 		String username = sessionRepo.getSessionBySessionId(sessionId).getUser();
 		return ownerRepo.getOwnerByName(username);
 	}
@@ -47,6 +51,7 @@ public class UserService {
 	 * @param owner
 	 */
 	public void saveOwner(Owner owner) {
+
 		owner.setEncodedPassword();
 		ownerRepo.save(owner);
 
@@ -54,9 +59,25 @@ public class UserService {
 		roleRepo.save(role);
 	}
 
-//ADMIN SECTION
+	public boolean isSessionExpired(HttpServletRequest request) {
+
+		boolean isSessionExpired = true;
+
+		HttpSession session = request.getSession();
+
+		if (!session.isNew()) {
+
+			Owner ownerBySessionId = getOwnerBySessionId(session.getId());
+
+			isSessionExpired = ownerBySessionId == null;
+		}
+		return isSessionExpired;
+	}
+
+	//ADMIN SECTION
 
 	public void saveAdmin(Owner admin) {
+
 		ownerRepo.save(admin);
 
 		Roles role = new Roles(admin, Role.ROLE_ADMIN);
@@ -77,6 +98,9 @@ public class UserService {
 
 
 
-//check if given sessionId is correct; sessionId != primaryId
+//sessionId != primaryId
+//off
+//HttpSession only for Owner's purposes; not check if session expired; responsible for that is SpringSecurity
+
 
 }

@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>intro</title>
-</head>
+<head th:replace="template :: header"></head>
 <body>
+
+<div th:replace="template :: nav"></div>
 
 <h1>intro page</h1>
 
@@ -53,6 +52,6 @@
 
 
 <button><a href="/game/team">BACK</a></button>
-
+<div th:replace="template :: footer"></div>
 </body>
 </html>
