@@ -5,11 +5,11 @@
 
     <h1>Top10</h1>
 
-    <div th:if="${#lists.isEmpty(top10data)}">
+    <div class="noRecords" th:if="${#lists.isEmpty(top10data)}">
         <h2>The list has no records. Be the first ring owner</h2>
     </div>
 
-    <div th:unless="${#lists.isEmpty(top10data)}">
+    <div class="records" th:unless="${#lists.isEmpty(top10data)}">
 
         <table>
             <tr>
@@ -25,7 +25,7 @@
         </table>
     </div>
 
-    <button><a href="/game/team">BACK</a></button>
+    <button class="btnBackToTeam"><a href="/game/team">BACK</a></button>
 
     <div th:replace="template :: footer"></div>
 </body>

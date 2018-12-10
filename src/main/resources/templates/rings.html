@@ -11,6 +11,7 @@
     <h3>You have no rings so far!</h3>
     <h3>You must try harder!</h3>
 </div>
+
 <div th:unless="${isAnyRing} == false">
     <table>
         <tr>
@@ -30,6 +31,8 @@
 
 
 <button><a href="/game/team">BACK</a></button>
+
 <div th:replace="template :: footer"></div>
+
 </body>
 </html>

@@ -6,7 +6,7 @@
 
 <h1>intro page</h1>
 
-<div>
+<div class="rules">
     This is my first online game.
     So please be aware that it might be not bugs-free.
 
@@ -57,10 +57,9 @@
     The position is randomly changed after each game.
 
     That's all!
-
-
 </div>
-<p th:text="${isOwnerNew}"></p>
+
+<!--<p th:text="${isOwnerNew}"></p>-->
 <div th:if="${isOwnerNew} == true">
     <tr th:each="team : ${teams}">
         <form method="post" action="#" th:action="@{/game/intro}">
@@ -75,6 +74,8 @@
 <div th:unless="${isOwnerNew} == true">
     <a href="/game/team">Let's start game!</a>
 </div>
+
 <div th:replace="template :: footer"></div>
+
 </body>
 </html>

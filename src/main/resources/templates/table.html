@@ -7,22 +7,11 @@
 
 <h1>table page</h1>
 
-<table style="border:1px solid black; border-collapse: collapse" width="30%">
-    <tr style="border:1px solid black">
-        <th>Team</th>
-        <th>Played</th>
-        <th>Wins</th>
-        <th>+-</th>
-    </tr>
-    <tr th:each="team : ${teams}" style="border:1px solid black">
-        <th th:text="${team.getName()}">team</th>
-        <th th:text="${team.getSeasonGamesPlayed()}">played</th>
-        <th th:text="${team.getWins()}">wins</th>
-        <th th:text="${team.getPlusMinus()}">plus minus</th>
-    </tr>
-</table>
+<div th:replace="template :: table"></div>
 
 <button><a href="/game/team">BACK</a></button>
+
 <div th:replace="template :: footer"></div>
+
 </body>
 </html>

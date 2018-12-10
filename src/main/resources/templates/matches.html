@@ -46,10 +46,9 @@
         <td th:text="${__${c1}__}">coachHome</td>
         <td> vs </td>
         <td th:text="${__${c2}__}">coachAway</td>
-
     </tr>
-    <th:block th:each="pvp: ${#numbers.sequence(1, 5)}" th:value="${pvp}">
 
+    <th:block th:each="pvp: ${#numbers.sequence(1, 5)}" th:value="${pvp}">
         <div th:with="b = battle + ${pvp} + ${iterator.index},s = summary + ${pvp} + ${iterator.index}
                  ,showBattle = (${iterator.index}+1) * 10 + ${pvp}
                  ,showSummary = ((${iterator.index}+1) * 10 + ${pvp}) * (${iterator.size}+1)
@@ -71,6 +70,7 @@
 </form>
 
 <div th:replace="template :: footer"></div>
+
 </body>
 </html>
 

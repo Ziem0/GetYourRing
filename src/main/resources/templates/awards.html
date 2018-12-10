@@ -22,48 +22,20 @@
         <th>Won battles entire career</th>
     </tr >
     <tr style="border:1px solid black">
-        <td th:text="${mvp.getName()}"></td>
-        <td th:text="${mvp.getTeam().getName()}"></td>
-        <td th:text="${mvp.getWonBattlesPerSeason()}"></td>
-        <td th:text="${mvp.getWonBattlesEntireCareer()}"></td>
+        <th th:text="${mvp.getName()}"></th>
+        <th th:text="${mvp.getTeam().getName()}"></th>
+        <th th:text="${mvp.getWonBattlesPerSeason()}"></th>
+        <th th:text="${mvp.getWonBattlesEntireCareer()}"></th>
     </tr>
 </table>
 
-
-
-<!--<table style="border:1px solid black; border-collapse: collapse" width="10%">-->
-    <!--<tr style="border:1px solid black">-->
-        <!--<th>Team</th>-->
-        <!--<th>Wins</th>-->
-        <!--<th>+-</th>-->
-    <!--</tr>-->
-    <!--<tr th:each="team : ${teams}" style="border:1px solid black">-->
-        <!--<th th:text="${team.getName()}">team</th>-->
-        <!--<th th:text="${team.getWins()}">wins</th>-->
-        <!--<th th:text="${team.getPlusMinus()}">plus minus</th>-->
-    <!--</tr>-->
-<!--</table>-->
-
-
-<table style="border:1px solid black; border-collapse: collapse" width="30%">
-    <tr style="border:1px solid black">
-        <th>Team</th>
-        <th>Played</th>
-        <th>Wins</th>
-        <th>+-</th>
-    </tr>
-    <tr th:each="team : ${teams}" style="border:1px solid black">
-        <th th:text="${team.getName()}">team</th>
-        <th th:text="${team.getSeasonGamesPlayed()}">played</th>
-        <th th:text="${team.getWins()}">wins</th>
-        <th th:text="${team.getPlusMinus()}">plus minus</th>
-    </tr>
-</table>
-
+<div th:replace="template :: table"></div>
 
 <form method="post" action="#" th:action="@{/game/awards}">
     <button type="submit">START NEXT SEASON</button>
 </form>
+
 <div th:replace="template :: footer"></div>
+
 </body>
 </html>
