@@ -15,9 +15,9 @@
     <button><a href="/game/trade">trade</a></button>
 </div>
 
-<button><a href="/game/table">table</a></button>
-<button><a href="/game/matches">match</a></button>
-<button><a href="/game/rings">YOUR RINGS</a></button>
+<a href="/game/table"><img src="/static/images/tableBtn.png" alt="btnTable" title="check table!"></a>
+<a href="/game/matches"><img src="/static/images/matchBtn.png" alt="btnMatch" title="play games!"></a>
+<a href="/game/rings"><img src="/static/images/ringBtn.png" alt="btnRings" title="check won rings!"></a>
 
 <tr th:each="player : ${players}">
     <td th:text="${player.getName()}">name</td>

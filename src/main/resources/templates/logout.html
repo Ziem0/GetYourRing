@@ -3,13 +3,10 @@
 <head th:replace="template :: header"></head>
 <body>
 
-    <h1>LOGOUT</h1>
-
     <form name="logoutForm" th:action="@{/logout}" method="post">
         <input type="submit" value="SIGN OUT"/>
     </form>
 
-    <div th:replace="template :: footer"></div>
 </body>
 </html>
 

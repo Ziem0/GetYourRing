@@ -3,17 +3,22 @@
 <head th:replace="template :: header"></head>
 <body>
 
-    <h1>create page</h1>
+    <div th:replace="template::welcomeNav"></div>
 
-    <form method="post" action="#" th:action="@{/create}" th:object="${owner}">
-        <label>username</label>
-        <input type="text" name="username" th:field="*{username}">
-        <label>password</label>
-        <input type="password" name="password" th:field="*{password}">
-        <label>email</label>
-        <input type="email" name="email" th:field="*{email}">
-        <input type="submit" value="login">
-    </form>
+    <div class="createContainer">
+
+        <h2>Registry</h2>
+        <br>
+        <form method="post" action="#" th:action="@{/create}" th:object="${owner}">
+            <label>username</label>
+            <input type="text" name="username" th:field="*{username}" autofocus required>
+            <label>password</label>
+            <input type="password" name="password" th:field="*{password}" required>
+            <label>email</label>
+            <input type="email" name="email" th:field="*{email}" required>
+            <input type="submit" value="login">
+        </form>
+    </div>
 
     <div th:replace="template :: footer"></div>
 </body>

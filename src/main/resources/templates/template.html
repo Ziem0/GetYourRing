@@ -6,17 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 
+
+<div class="welcomeNav" th:fragment="welcomeNav">
+    <img src="/static/images/ban.jpeg" alt="welcome">
+    <img src="/static/images/welcome.jpeg" alt="welcome">
+    <img src="/static/images/welcome3.jpeg" alt="welcome">
+    <h1>Get Your Ring!</h1>
+</div>
+
+
 <div class="nav" th:fragment="nav">
-    <h4>demo NaviBar</h4>
     <ul>
-        <li><a href="/game/top10">top10</a></li>
+        <li><a href="/game/top10">top 10</a></li>
         <li>
             <form name="logoutForm" th:action="@{/logout}" method="post">
                 <input type="submit" value="Sign Out"/>
             </form>
         </li>
     </ul>
+    <h1>Get Your Ring!</h1>
 </div>
+
 
 <table class="table" th:fragment="table" style="border:1px solid black; border-collapse: collapse" width="30%">
     <tr style="border:1px solid black">

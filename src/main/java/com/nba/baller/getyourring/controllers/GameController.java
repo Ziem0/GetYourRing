@@ -257,6 +257,13 @@ public class GameController {
 		return "top10";
 	}
 
+
+	//demo
+	@GetMapping("/game/playa")
+	public String playa() {
+		return "player";
+	}
+
 }
 
 //todo:

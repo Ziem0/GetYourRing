@@ -3,21 +3,25 @@
 <head th:replace="template :: header"></head>
 <body>
 
-    <h1>home page</h1>
+        <div th:replace="template::welcomeNav"></div>
 
-    <div th:if="${isSessionExpired} == true">
-        <a href="/create">create new account</a>
-    </div>
+        <div class="homeContainer">
 
-    <div th:unless="${isSessionExpired} == true">
-        <form name="logoutForm" th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
-        </form>
-    </div>
+            <div th:if="${isSessionExpired} == true">
+                <a href="/create">register</a>
+            </div>
 
-    <a href="/game">login to your account</a>
+            <div th:unless="${isSessionExpired} == true">
+                <form name="logoutForm" th:action="@{/logout}" method="post">
+                    <input type="submit" value="sign out"/>
+                </form>
+            </div>
 
-    <div th:replace="template :: footer"></div>
+            <a href="/game">login</a>
+
+        </div>
+
+        <div th:replace="template :: footer"></div>
 
 </body>
 </html>
