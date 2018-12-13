@@ -17,6 +17,7 @@ body {
     grid-template-rows: 2fr 5fr 0.5fr;
 }
 
+input[type=email]:invalid { background: rgba(255, 0, 0, 0.5)}
 
 /*WELCOME_NAV*/
 .welcomeNav {
@@ -95,7 +96,8 @@ body {
 .awardsContainer button,
 .tableContainer a,
 .tradeContainer a,
-.rules a {
+.rules a,
+.matchContainer .nextRoundBtn {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.6);
     color: #f5f5f5;
@@ -118,7 +120,8 @@ body {
 .tableContainer a:hover,
 .awardsContainer button:hover,
 .tradeContainer a:hover,
-.rules a:hover {
+.rules a:hover,
+.matchContainer .nextRoundBtn:hover {
     background: rgba(245, 245, 245, 0.8);
     color: #000000;
     box-shadow: black 4px 4px 0 0;
@@ -268,7 +271,6 @@ table, tr, th {
     justify-self: center;
     align-items: center;
     grid-row-gap: 50px;
-    /*max-width: calc(100vw - 30px);*/
 }
 
 .teamContainer .season {
@@ -431,7 +433,43 @@ table, tr, th {
     grid-row: 8/9;
 }
 
+/*MATCH_CONTAINER*/
+.matchContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-gap: 30px;
+}
 
+.matchContainer .matchInfo {
+    padding: 2vh;
+    background: linear-gradient(to right, rgba(245, 245, 245, 0.7), transparent);
+    text-align: center;
+}
+
+.matchContainer .results {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(5, 10px);
+    justify-items: center;
+}
+
+.matchContainer .results img {
+    max-height: 40px;
+    max-width: 40px;
+    cursor: pointer;
+}
+
+.matchContainer .results img:hover {
+    box-shadow: rgba(0, 0, 0, 0.4) 7px 7px 0 0;
+    transform: scale(1.2);
+    transition: all 0.2s ease-in-out;
+}
+
+.matchContainer .matchHall {
+    height: 30vw;
+    width: 70vw;
+}
 
 /*FOOT*/
 .foot {
@@ -503,24 +541,3 @@ table, tr, th {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*input[type=email]:valid { background: green }*/
-/*input[type=email]:invalid { background: red }*/
-

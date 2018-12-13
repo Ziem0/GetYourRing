@@ -5,69 +5,72 @@
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    <!--<script type="text/javascript">-->
-        <!--window.onbeforeunload = function() {-->
-            <!--return "Dude, are you sure you want to leave?!";-->
-        <!--}-->
-    <!--// </script>-->
-
     <script th:inline="javascript">
-        function showBattle(bbx, batx) {
-            document.getElementById(bbx).innerHTML = document.getElementById(batx).innerText;
-        }
-
-        function showSum(bsx,sumx) {
-            document.getElementById(bsx).innerHTML = document.getElementById(sumx).innerText;
+        function showHidden(hiddenId, shownId) {
+            document.getElementById(hiddenId).innerHTML = document.getElementById(shownId).innerText;
         }
     </script>
 
 </head>
 <body>
 
-<div th:replace="template :: nav"></div>
+    <div th:replace="template :: nav"></div>
 
-<th:block th:each="game, iterator : ${nextRoundMatches}">
-    <tr th:with="c = city+${iterator.index}, h = hall+${iterator.index}
-                ,t1 = teamHome+${iterator.index}, t2 = teamAway+${iterator.index}, c1 = coachHome+${iterator.index}, c2 = coachAway+${iterator.index}">
-        <td>City:</td>
-        <td th:text="${__${c}__}">city</td>
-        <br>
-        <td>Hall:</td>
-        <td th:text="${__${h}__}">hall</td>
-        <br>
-        <td>Match:</td>
-        <td th:text="${__${t1}__}">teamHome</td>
-        <td> vs </td>
-        <td th:text="${__${t2}__}">teamAway</td>
-        <br>
-        <td>Coaches:</td>
-        <td th:text="${__${c1}__}">coachHome</td>
-        <td> vs </td>
-        <td th:text="${__${c2}__}">coachAway</td>
-    </tr>
+    <div class="matchContainer">
 
-    <th:block th:each="pvp: ${#numbers.sequence(1, 5)}" th:value="${pvp}">
-        <div th:with="b = battle + ${pvp} + ${iterator.index},s = summary + ${pvp} + ${iterator.index}
-                 ,showBattle = (${iterator.index}+1) * 10 + ${pvp}
-                 ,showSummary = ((${iterator.index}+1) * 10 + ${pvp}) * (${iterator.size}+1)
-                 ,hiddenBattle = ((${iterator.index}+1) * 10 + ${pvp}) * (${T(Math).pow((iterator.size+1),2)})
-                 ,hiddenSummary = ((${iterator.index}+1) * 10 + ${pvp}) * (${T(Math).pow((iterator.size+1),3)})">
+        <th:block th:each="game, iterator : ${nextRoundMatches}">
+            <tr th:with="c = city+${iterator.index}, h = hall+${iterator.index}
+                        ,t1 = teamHome+${iterator.index}, t2 = teamAway+${iterator.index}
+                        ,c1 = coachHome+${iterator.index}, c2 = coachAway+${iterator.index}
+                        ,hallPath = ${#strings.substring(game.getTeamOne().getName(), 0 , 3)}+'/hall.jpeg'">
 
-            <p th:id="${showBattle}" th:text="${__${b}__}" hidden>battle</p>
-            <p th:id="${showSummary}" th:text="${__${s}__}" hidden>summary</p>
+                <div class="matchInfo">
+                    <td>City:</td>
+                    <td th:text="${__${c}__}">city</td>
+                    <br>
+                    <td>Hall:</td>
+                    <td th:text="${__${h}__}">hall</td>
+                    <br>
+                    <td>Match:</td>
+                    <td th:text="${__${t1}__}">teamHome</td>
+                    <td> vs </td>
+                    <td th:text="${__${t2}__}">teamAway</td>
+                    <br>
+                    <td>Coaches:</td>
+                    <td th:text="${__${c1}__}">coachHome</td>
+                    <td> vs </td>
+                    <td th:text="${__${c2}__}">coachAway</td>
+                    <img class="matchHall" th:src="'../static/images/'+${hallPath}">
+                </div>
+            </tr>
 
-            <button th:id="${hiddenBattle}"  th:onclick="'javascript:showBattle(\''+${hiddenBattle}+'\',\''+${showBattle}+'\');'">show battle</button>
-            <button th:id="${hiddenSummary}" th:onclick="'javascript:showBattle(\''+${hiddenSummary}+'\',\''+${showSummary}+'\');'">show summary</button>
+            <!--calculate unique id's, regardless of the number of teams-->
+            <th:block th:each="pvp: ${#numbers.sequence(1, 5)}" th:value="${pvp}">
+                <div th:with="b = battle + ${pvp} + ${iterator.index},s = summary + ${pvp} + ${iterator.index}
+                         ,showBattle = (${iterator.index}+1) * 10 + ${pvp}
+                         ,showSummary = ((${iterator.index}+1) * 10 + ${pvp}) * (${iterator.size}+1)
+                         ,hiddenBattle = ((${iterator.index}+1) * 10 + ${pvp}) * (${T(Math).pow((iterator.size+1),2)})
+                         ,hiddenSummary = ((${iterator.index}+1) * 10 + ${pvp}) * (${T(Math).pow((iterator.size+1),3)})">
 
-        </div>
-    </th:block>
-</th:block>
+                    <p th:id="${showBattle}" th:text="${__${b}__}" hidden>battle</p>
+                    <p th:id="${showSummary}" th:text="${__${s}__}" hidden>summary</p>
 
-<form method="post" action="#" th:action="@{/game/matches}">
-    <button type="submit">NEXT</button>
-</form>
+                    <div class="results">
+                        <a th:id="${hiddenBattle}" th:onclick="'javascript:showHidden(\''+${hiddenBattle}+'\',\''+${showBattle}+'\');'"><img src="../static/images/axe.png"></a>
+                        <a th:id="${hiddenSummary}" th:onclick="'javascript:showHidden(\''+${hiddenSummary}+'\',\''+${showSummary}+'\');'"><img src="../static/images/calculating.png"></a>
+                    </div>
 
-<div th:replace="template :: foot"></div>
+                </div>
+            </th:block>
+        </th:block>
+
+        <form method="post" action="#" th:action="@{/game/matches}">
+            <button class="nextRoundBtn" type="submit">CONTINUE</button>
+        </form>
+
+    </div>
+
+    <div th:replace="template :: foot"></div>
 
 </body>
 </html>

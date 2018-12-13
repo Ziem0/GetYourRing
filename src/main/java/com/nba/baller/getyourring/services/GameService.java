@@ -403,7 +403,7 @@ public class GameService {
 							.append(teamOneCoach.getName())
 							.append("     boosted position:     ")
 							.append(teamOneCoach.getBoostedPosition())
-							.append("     booster value:     ")
+							.append("     booster:     ")
 							.append(teamOneCoach.getSpecialValueForPosition());
 
 					modelMap.addAttribute("coachHome" + matchCounter, coachHome);
@@ -417,7 +417,7 @@ public class GameService {
 							.append(teamTwoCoach.getName())
 							.append("     boosted position:     ")
 							.append(teamTwoCoach.getBoostedPosition())
-							.append("     booster value:     ")
+							.append("     booster:     ")
 							.append(teamTwoCoach.getSpecialValueForPosition());
 
 					modelMap.addAttribute("coachAway" + matchCounter, coachAway);
