@@ -327,6 +327,12 @@ public class GameService {
 
 		map.addAttribute("season", season);
 
+		StringBuilder cityPath = new StringBuilder();
+		cityPath
+				.append(userTeam.getName().substring(0,3))
+				.append("/city.jpeg");
+		map.addAttribute("cityPath", cityPath);
+
 		List<Player> players = getPlayersByTeam(userTeam);
 
 		Coach coach = getCoachByTeam(userTeam);
@@ -556,6 +562,11 @@ public class GameService {
 		Player mvp = getMvp(owner);
 		map.addAttribute("mvp", mvp);
 
+		String firstName = mvp.getName().split(" ")[0];
+		String lastName = mvp.getName().split(" ")[1];
+		map.addAttribute("firstName", firstName);
+		map.addAttribute("lastName", lastName);
+
 		StringBuilder companyPresidiumComment = new StringBuilder();
 		for (int i = 0; i < teams.size(); i++) {
 			if (teams.get(i).getName().equals(userTeam.getName())) {
@@ -599,10 +610,18 @@ public class GameService {
 
 	public void getRingsPageInit(ModelMap map) {
 
+		addRing(owner, userTeam, season);
+
 		List<Ring> ringsByOwner = getRingsByOwner(owner);
 
 		boolean isAnyRing = ringsByOwner.size() > 0;
 
+		StringBuilder ringPath = new StringBuilder();
+		ringPath
+				.append(userTeam.getName().substring(0,3))
+				.append("/ring.jpeg");
+
+		map.addAttribute("ringPath", ringPath);
 		map.addAttribute("isAnyRing", isAnyRing);
 		map.addAttribute("rings", ringsByOwner);
 	}

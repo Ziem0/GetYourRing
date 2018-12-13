@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Fredoka+One|Permanent+Marker');
 
-/*font-family: 'Fredoka One', cursive;*/
-
 * {
     font-family: 'Permanent Marker', cursive;
     box-sizing: border-box;
     margin: 0;
 }
+
+/*DISPLAY>700PX WIDTH (DEFAULT)*/
 
 body {
     height: 100vh;
@@ -20,27 +20,27 @@ body {
 
 /*WELCOME_NAV*/
 .welcomeNav {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 200px;
+    display: flex;
+    flex-direction: row;
     background: #000000;
     box-shadow: #000000 0 0 10px 10px;
     position: sticky;
     top: 0;
     z-index: 100;
+    max-width: calc(100vw - 30px);
 }
 
-.welcomeNav h1 {
+.welcomeNav h1, .nav h1 {
     color: #f5f5f5;
     transform: rotate(90deg);
-    text-align: right;
     text-decoration: overline;
+    margin-top: 150px;
+    white-space: nowrap;
 }
 
 .welcomeNav img {
-    max-height: 200px;
-    min-width: 400px;
+    height: 200px;
+    max-width: 30vw;
 }
 
 /*MAIN_NAV*/
@@ -54,13 +54,6 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
-}
-
-.nav h1 {
-    transform: rotate(90deg);
-    color: #f5f5f5;
-    margin-top: 150px;
-    text-decoration: overline;
 }
 
 .nav ul {
@@ -84,9 +77,6 @@ body {
     border-radius: 8px;
 }
 
-
-
-
 /*HOME_CONTAINER*/
 .homeContainer {
     margin: 200px;
@@ -100,7 +90,12 @@ body {
 .homeContainer a,
 .introContainer a,
 .introContainer button,
-.top10Container a {
+.top10Container a,
+.ringsContainer a,
+.awardsContainer button,
+.tableContainer a,
+.tradeContainer a,
+.rules a {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.6);
     color: #f5f5f5;
@@ -118,7 +113,12 @@ body {
 .nav a:hover,
 .introContainer a:hover,
 .introContainer button:hover,
-.top10Container a:hover {
+.top10Container a:hover,
+.ringsContainer a:hover,
+.tableContainer a:hover,
+.awardsContainer button:hover,
+.tradeContainer a:hover,
+.rules a:hover {
     background: rgba(245, 245, 245, 0.8);
     color: #000000;
     box-shadow: black 4px 4px 0 0;
@@ -146,18 +146,14 @@ body {
 }
 
 /*INTRO_CONTAINER*/
-.introContainer, .top10Container{
+.introContainer, .top10Container, .ringsContainer, .tableContainer, .awardsContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 200px;
-    padding: 50px;
+    margin: 10vw;
+    padding: 25px;
     background: rgba(245, 245, 245, 0.3);
-}
-
-.introContainer p {
-    font-size: 1.4em;
 }
 
 .introContainer button {
@@ -166,13 +162,274 @@ body {
 }
 
 /*TABLE_FORMATTER*/
-table, tr, th{
+table, tr, th {
     width: 45vw;
     border: 10px solid rgba(0, 0, 0, 0.4);
     border-collapse: collapse;
+    margin-top: 50px;
 }
 
-/*TOP10_CONTAINER*/
+/*RINGS_CONTAINER*/
+.ringsContainer img {
+    margin: 30px;
+    border-radius: 50%;
+    box-shadow: 0 0 30px black;
+    max-width: 250px;
+    max-height: 250px;
+}
+.ringsContainer img:hover {
+    transform: scale(1.2, 1.2);
+    box-shadow: rgba(0, 0, 0, 0.4) 10px 10px 0 0;
+    transition: all 0.3s ease-in-out;
+}
+
+/*AWARDS_CONTAINER*/
+.awardsContainer .winners {
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    max-width: 300px;
+    max-height: 200px;
+    z-index: 100;
+}
+
+.awardsContainer .winners h3:first-child {
+    grid-column: 1/2;
+    grid-row: 2/3;
+}
+
+.awardsContainer .winners h3:nth-child(2) {
+    grid-column: 2/3;
+    grid-row: 1/2;
+}
+
+.awardsContainer .winners h3:last-child {
+    grid-column: 3/4;
+    grid-row: 2/3;
+}
+
+.awardsContainer .winners h3{
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+}
+
+.awardsContainer img {
+    max-height: 300px;
+    max-width: 300px;
+}
+
+.awardsContainer h2 {
+    margin: 10px;
+    text-align: center;
+}
+
+/*TRADE_CONTAINER*/
+.tradeContainer {
+    display: grid;
+    grid-template-columns: 1fr 25px 1fr;
+    grid-template-rows: repeat(2, 1fr) 50px;
+    margin: 10vw 0 20vw 0;
+    padding: 5px;
+    background: rgba(245, 245, 245, 0.3);
+}
+
+.tradeContainer .myTeam {
+    grid-column:1/2 ;
+    grid-row: 2/3;
+}
+
+.tradeContainer .restTeams {
+    grid-column: 3/4;
+    grid-row: 1/4;
+}
+
+.tradeContainer a {
+    grid-column: 1/2;
+    grid-row: 4/5;
+    max-width: 110px;
+    text-align: center;
+}
+
+.tradeContainer pre {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    justify-self: center;
+    align-self: center;
+    font-size: larger;
+}
+
+/*TEAM_CONTAINER*/
+.teamContainer {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: 50px 50px 100px 2fr 2fr 50px 0.5fr 80px;
+    grid-template-columns: repeat(3, 1fr);
+    justify-self: center;
+    align-items: center;
+    grid-row-gap: 50px;
+    /*max-width: calc(100vw - 30px);*/
+}
+
+.teamContainer .season {
+    grid-column: 2/3;
+    grid-row: 1/2;
+    text-align: center;
+    margin-top: 100px;
+    font-size: xx-large;
+}
+
+.teamContainer .tradeInfo {
+    grid-column: 2/3;
+    grid-row: 2/3;
+    text-align: center;
+    animation-name: tradeWarning;
+    animation-duration: 5s;
+}
+
+@keyframes tradeWarning {
+    0% {
+        color: rgba(255, 0, 0, 0.9);
+    }
+    20% {
+        color: transparent;
+    }
+    40% {
+        color: rgba(255, 0, 0, 0.9);
+    }
+    60% {
+        color: transparent;
+    }
+    80% {
+        color: rgba(255, 0, 0, 0.9);
+    }
+    100% {
+        color: transparent;
+    }
+}
+
+.teamContainer .options {
+    grid-column: 1/4;
+    grid-row: 3/4;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.teamContainer .options .ball {
+    animation-name: bounceBall;
+    animation-duration: 3s;
+}
+
+@keyframes bounceBall {
+    0% {
+        transform: translate(0, -60vmin) rotate(110deg);
+    }
+    10% {
+        transform: translate(0, 0) rotate(100deg);
+    }
+    20% {
+        transform: translate(0, -50vmin) rotate(90deg);
+    }
+    30% {
+        transform: translate(0, 0) rotate(80deg);
+    }
+    40% {
+        transform: translate(0, -45vmin) rotate(70deg);
+    }
+    50% {
+        transform: translate(0, 0) rotate(60deg);
+    }
+    60% {
+        transform: translate(0, -40vmin) rotate(50deg);
+    }
+    70% {
+        transform: translate(0, 0) rotate(40deg);
+    }
+    80% {
+         transform: translate(0, -20vmin) rotate(30deg);
+     }
+    90% {
+        transform: translate(0, 0) rotate(20deg);
+    }
+    95% {
+        transform: translate(0, -10vmin) rotate(10deg);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+.teamContainer .options img {
+    max-width: 100px;
+    max-height: 80px;
+}
+
+.teamContainer .options img:hover {
+    transform: scale(1.3) rotate(10deg);
+    box-shadow: #000000 4px 4px 0 0;
+    transition: all 0.5s ease-in-out;
+}
+
+.teamContainer .teamInfo {
+    grid-column: 1/2;
+    grid-row: 4/5;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    background: linear-gradient(to right, rgba(245, 245, 245, 0.4), transparent);
+    padding: 20px;
+}
+
+.teamContainer .cityPan {
+    grid-column: 2/4;
+    grid-row: 4/5;
+    max-width: 50vw;
+    max-height: 300px;
+    border-radius: 5%;
+}
+
+.teamContainer .cityPan:hover {
+    transform: scale(1.4);
+    box-shadow: #000000 7px 7px 0 0;
+    transition: all 0.9s ease-in-out;
+}
+
+
+.teamContainer .squad {
+    grid-column: 2/3;
+    grid-row: 5/6;
+    background: linear-gradient(to right, rgba(245, 245, 245, 0.4), transparent);
+    padding: 20px;
+}
+
+.teamContainer .coach {
+    grid-column: 2/3;
+    grid-row: 6/7;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to right, rgba(245, 245, 245, 0.4), transparent);
+    padding: 20px;
+}
+
+.teamContainer .nextRound {
+    grid-column: 1/2;
+    grid-row: 7/8;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background: linear-gradient(to right, rgba(245, 245, 245, 0.4), transparent);
+    padding: 20px;
+}
+
+.teamContainer .rules {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    grid-column: 2/3;
+    grid-row: 8/9;
+}
 
 
 
@@ -183,6 +440,76 @@ table, tr, th{
     align-items: center;
     background: rgba(255, 255, 255, 0.8);
 }
+
+
+/*DISPLAY<701PX WIDTH*/
+@media all and (max-width: 700px) {
+    /*WELCOME_NAV*/
+    .welcomeNav {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .welcomeNav h1 {
+        color: #f5f5f5;
+        transform: rotate(0deg);
+        text-align: center;
+    }
+
+    .welcomeNav img {
+        max-width: 100vw;
+    }
+
+    .introContainer {
+        margin: 5px;
+    }
+
+    .introContainer pre {
+        font-size: x-small;
+    }
+
+    /*TRADE_CONTAINER*/
+    .tradeContainer {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 100px 1fr 3fr 80px;
+        justify-items: center;
+        background: rgba(245, 245, 245, 0.3);
+    }
+
+    .tradeContainer pre {
+        grid-column: 1/2;
+        grid-row: 1/2;
+        font-size: smaller;
+    }
+
+    .tradeContainer .myTeam {
+        grid-column:1/2 ;
+        grid-row: 2/3;
+    }
+
+    .tradeContainer .restTeams {
+        grid-column: 1/2;
+        grid-row: 3/4;
+    }
+
+    .tradeContainer a {
+        grid-column: 1/2;
+        grid-row: 4/5;
+        max-width: 110px;
+        text-align: center;
+    }
+
+
+}
+
+
+
+
+
+
+
 
 
 

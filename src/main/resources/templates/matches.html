@@ -26,8 +26,6 @@
 
 <div th:replace="template :: nav"></div>
 
-<h1>matches page</h1>
-
 <th:block th:each="game, iterator : ${nextRoundMatches}">
     <tr th:with="c = city+${iterator.index}, h = hall+${iterator.index}
                 ,t1 = teamHome+${iterator.index}, t2 = teamAway+${iterator.index}, c1 = coachHome+${iterator.index}, c2 = coachAway+${iterator.index}">
@@ -69,7 +67,7 @@
     <button type="submit">NEXT</button>
 </form>
 
-<div th:replace="template :: footer"></div>
+<div th:replace="template :: foot"></div>
 
 </body>
 </html>

@@ -3,39 +3,46 @@
 <head th:replace="template :: header"></head>
 <body>
 
-<div th:replace="template :: nav"></div>
+    <div th:replace="template :: nav"></div>
 
-<h1>awards page</h1>
+    <div class="awardsContainer">
 
-<h2 th:text="${comment}">comment</h2>
+        <div class="winners">
+            <h3 th:text="${second}">2nd</h3>
+            <h3 th:text="${winner}">winner</h3>
+            <h3 th:text="${third}">3rd</h3>
+        </div>
 
-<!--podium background-->
-<h3 th:text="${winner}">winner</h3>
-<h4 th:text="${second}">2nd</h4>
-<h5 th:text="${third}">3rd</h5>
+        <img src="../static/images/podium.png">
 
-<table style="border:1px solid black; border-collapse: collapse" width="10%">
-    <tr style="border:1px solid black">
-        <th>MVP</th>
-        <th>Team</th>
-        <th>Won battles last season</th>
-        <th>Won battles entire career</th>
-    </tr >
-    <tr style="border:1px solid black">
-        <th th:text="${mvp.getName()}"></th>
-        <th th:text="${mvp.getTeam().getName()}"></th>
-        <th th:text="${mvp.getWonBattlesPerSeason()}"></th>
-        <th th:text="${mvp.getWonBattlesEntireCareer()}"></th>
-    </tr>
-</table>
+        <img th:src="'https://nba-players.herokuapp.com/players/'+ ${lastName}+'/'+${firstName}">
 
-<div th:replace="template :: table"></div>
+        <table>
+            <tr>
+                <th>MVP</th>
+                <th>Team</th>
+                <th>Won battles last season</th>
+                <th>Won battles entire career</th>
+            </tr>
+            <tr>
+                <th th:text="${mvp.getName()}"></th>
+                <th th:text="${mvp.getTeam().getName()}"></th>
+                <th th:text="${mvp.getWonBattlesPerSeason()}"></th>
+                <th th:text="${mvp.getWonBattlesEntireCareer()}"></th>
+            </tr>
+        </table>
 
-<form method="post" action="#" th:action="@{/game/awards}">
-    <button type="submit">START NEXT SEASON</button>
-</form>
+        <div th:replace="template :: table"></div>
 
-<div th:replace="template :: footer"></div>
+        <h2>Boss comment:</h2>
+        <h2 th:text="${comment}"></h2>
+
+        <form method="post" action="#" th:action="@{/game/awards}">
+            <button type="submit">START NEXT SEASON</button>
+        </form>
+    </div>
+
+    <div th:replace="template :: foot"></div>
 
 </body>
 </html>

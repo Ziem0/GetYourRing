@@ -13,31 +13,39 @@
 
             But lets talk about game.
             You have a chance to become an NBA team's owner.
-            Your goals is to win championship based on match results and trades.
+            Your goals is to win championship
+            based on match results and trades.
             The game is half-roguelike half-manager.
-            So you have a real influence on the fate but keep in mind there are a few things you can't control!
+            So you have a real influence on the fate
+            but keep in mind there are a few things you can't control!
 
             Description:
             League contains 6 teams with 5 players and coach.
-            You have to pick your team. You can not change your team during the game.
-            Each player has an overall(1-5), changing after each game in the season (+-1).
+            You have to pick your team.
+            You can not change your team during the game.
+            Each player has an overall(1-5),
+            changing after each game in the season (+-1).
 
             Trades:
             After each game you have 2 chances to trade players.
-            Trades are based on player's position and the contract's value (3-10 mln $)
+            Trades are based on player's position
+            and the contract's value (3-10 mln $)
             You can't trade player if he is your next opponent.
-            Trade is allowed when difference between players' contracts is max 3 mln $
+            Trade is allowed
+            when difference between players' contracts is max 3 mln $
             Remember:
             1.If you obtain player with higher overall and lower contract
                 then trade has 50/50 chance to be done.
                 If trade is done, opponent's overall will be randomly changed.
             2.If you obtain player with lower overall and higher contract
                 then there is a 10% chance your new player's overall
-                will be increased based on difference between traded players' contracts (0-difference).
+                will be increased based on
+                difference between traded players' contracts (0-difference).
             3.In other cases simply trade is done.
 
             Match:
-            The match consists of five mini battles based on players' positions and their overall.
+            The match consists of five mini battles based on
+            players' positions and their overall.
             During each mini battle, every overall is multiplied by 6.
             For example:
             PGs 1 - 3 gives 6 - 18
@@ -47,19 +55,22 @@
             summary         78 - 90
 
             The difference in score during each mini battle higher than 6
-            activates a crowd factor which means a random team will get a random amount of points (6-12)
+            activates a crowd factor which means
+            a random team will get a random amount of points (6-12)
             Home team has a higher chance to get the boost.
 
-            If all battles are done and the score is equal, coaches's special boost value is valid.
+            If all battles are done and the score is equal,
+            coaches's special boost value is valid.
             So if home coach has a higher value, home team win.
-            Otherwise, crowd lottery is valid. Bear in mind that a chance to win for a home team is higher (60%/40%)
+            Otherwise, crowd lottery is valid.
+            Bear in mind that a chance to win for a home team is higher (60%/40%)
 
             Coach:
-            Coach has one special ability. He changes overall for specified position (+-1).
+            Coach has one special ability.
+            He changes overall for specified position (+-1).
             The position is randomly changed after each game.
 
             That's all!
-
         </pre>
 
         <div th:if="${isOwnerNew} == true">

@@ -3,49 +3,87 @@
 <head th:replace="template :: header"></head>
 <body>
 
-<div th:replace="template :: nav"></div>
+    <div th:replace="template :: nav"></div>
 
-<h1>team page</h1>
+    <div class="teamContainer">
 
-<h2 th:text="'Official NBA ' + ${season} + ' season'"></h2>
+        <h2 class="season" th:text="'Official NBA ' + ${season} + ' season'"></h2>
 
-<h3 th:if="${tradeInfo} != null" th:text="${tradeInfo}">tradeInfo</h3>
+        <h3 class="tradeInfo" th:if="${tradeInfo} != null" th:text="${tradeInfo}">tradeInfo</h3>
 
-<div th:if="${tradesCounter}!=2">
-    <button><a href="/game/trade">trade</a></button>
-</div>
+        <div class="options">
+            <div th:if="${tradesCounter}!=2">
+                <a href="/game/trade"><img src="/static/images/tradeBtn.png" alt="btnTrade" title="trade player!"></a>
+            </div>
+            <a href="/game/table"><img src="/static/images/tableBtn.png" alt="btnTable" title="check table!"></a>
+            <a class="ball" href="/game/matches"><img src="/static/images/matchBtn.png" alt="btnMatch" title="play games!"></a>
+            <a href="/game/rings"><img src="/static/images/ringBtn.png" alt="btnRings" title="check won rings!"></a>
+        </div>
 
-<a href="/game/table"><img src="/static/images/tableBtn.png" alt="btnTable" title="check table!"></a>
-<a href="/game/matches"><img src="/static/images/matchBtn.png" alt="btnMatch" title="play games!"></a>
-<a href="/game/rings"><img src="/static/images/ringBtn.png" alt="btnRings" title="check won rings!"></a>
+        <img class="cityPan" th:src="'../static/images/'+${cityPath}">
 
-<tr th:each="player : ${players}">
-    <td th:text="${player.getName()}">name</td>
-    <td th:text="${player.getOverall()}">overall</td>
-    <td th:text="${player.getContractValue()}">contract</td>
-    <br>
-</tr>
+        <div class="squad">
+            <h3>Your actual squad:</h3>
+            <table>
+                <tr>
+                    <th>player</th>
+                    <th>overall</th>
+                    <th>contract</th>
+                </tr>
+                <tr th:each="player : ${players}">
+                    <th th:text="${player.getName()}">name</th>
+                    <th th:text="${player.getOverall()}">overall</th>
+                    <th th:text="${player.getContractValue()}">contract</th>
+                </tr>
+            </table>
+        </div>
 
-<tr>
-    <td th:text="${coach.getName()}" ></td>
-    <td th:text="${coach.getSpecialValueForPosition()}" ></td>
-</tr>
+        <div class="coach">
+            <h3>Your coach:</h3>
+            <tr>
+                <td th:text="${coach.getName()}"></td>
+            </tr>
+        </div>
 
-<p th:text="${city}"></p>
-<p th:text="${hall}"></p>
-<p th:text="${wins}"></p>
-<p th:text="${balance}"></p>
+        <div class="teamInfo">
+            <h3>Team info:</h3>
+            <ul>
+                <li>City :</li>
+                    <ul>
+                        <li th:text="${city}"></li>
+                    </ul>
+                <li>Hall :</li>
+                <ul>
+                    <li th:text="${hall}"></li>
+                </ul>
+                <li>Wins :</li>
+                    <ul>
+                        <li th:text="${wins}"></li>
+                    </ul>
+                <li>+- :</li>
+                    <ul>
+                        <li th:text="${balance}"></li>
+                    </ul>
+            </ul>
+        </div>
 
-<tr th:each="match : ${matches}" th:object="${matches}">
-    <td th:text="${match.getTeamOne().getName()}">match</td>
-    <td>vs</td>
-    <td th:text="${match.getTeamTwo().getName()}">match</td>
-    <br>
-</tr>
+        <div class="nextRound">
+            <h>Next round matches:</h>
+            <tr th:each="match : ${matches}" th:object="${matches}">
+                <td th:text="${match.getTeamOne().getName()}">match</td>
+                <td>vs</td>
+                <td th:text="${match.getTeamTwo().getName()}">match</td>
+                <br>
+            </tr>
+        </div>
 
-<button><a href="/game/intro">READ RULES</a></button>
+        <div class="rules">
+            <a href="/game/intro">READ RULES</a>
+        </div>
 
-<div th:replace="template :: footer"></div>
+    </div>
+
+    <div th:replace="template :: foot"></div>
 
 </body>
 </html>

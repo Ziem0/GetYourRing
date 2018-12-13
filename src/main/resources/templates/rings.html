@@ -3,36 +3,38 @@
 <head th:replace="template :: header"></head>
 <body>
 
-<div th:replace="template :: nav"></div>
+    <div th:replace="template :: nav"></div>
 
-<h1>Rings page</h1>
+    <div class="ringsContainer">
+        
+        <img th:src="'../static/images/'+${ringPath}">
+        
+        <div th:if="${isAnyRing} == false">
+            <h3>You have no rings so far!</h3>
+            <h3>You must try harder!</h3>
+        </div>
 
-<div th:if="${isAnyRing} == false">
-    <h3>You have no rings so far!</h3>
-    <h3>You must try harder!</h3>
-</div>
+        <div th:unless="${isAnyRing} == false">
+            <table>
+                <tr>
+                    <th>No.</th>
+                    <th>Date</th>
+                    <th>Team</th>
+                    <th>Season</th>
+                </tr>
+                <tr th:each="ring, stat : ${rings}">
+                    <th th:text="${stat.count}"></th>
+                    <th th:text="${ring.getDate()}"></th>
+                    <th th:text="${ring.getTeam()}"></th>
+                    <th th:text="${ring.getSeason()}"></th>
+                </tr>
+            </table>
+        </div>
 
-<div th:unless="${isAnyRing} == false">
-    <table>
-        <tr>
-            <th>No.</th>
-            <th>Date</th>
-            <th>Team</th>
-            <th>Season</th>
-        </tr>
-        <tr th:each="ring, stat : ${rings}">
-            <th th:text="${stat.count}"></th>
-            <th th:text="${ring.getDate()}"></th>
-            <th th:text="${ring.getTeam()}"></th>
-            <th th:text="${ring.getSeason()}"></th>
-        </tr>
-    </table>
-</div>
+        <a href="/game/team">BACK</a>
+    </div>
 
-
-<button><a href="/game/team">BACK</a></button>
-
-<div th:replace="template :: foot"></div>
+    <div th:replace="template :: foot"></div>
 
 </body>
 </html>

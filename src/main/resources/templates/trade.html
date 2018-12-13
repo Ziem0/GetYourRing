@@ -3,57 +3,63 @@
 <head th:replace="template :: header"></head>
 <body>
 
-<div th:replace="template :: nav"></div>
+    <div th:replace="template :: nav"></div>
 
-<h1>Trade page</h1>
+    <div class="tradeContainer">
 
-<div>
-    <h3>My Team</h3>
-    <table>
-        <tr>
-            <th>Position</th>
-            <th>Name</th>
-            <th>Overall</th>
-            <th>Contract</th>
-        </tr>
-        <tr th:each="player : ${myPlayers}">
-            <th th:text="${player.getPosition()}"></th>
-            <th th:text="${player.getName()}"></th>
-            <th th:text="${player.getOverall()}"></th>
-            <th th:text="${player.getContractValue()} + '$'"></th>
-        </tr>
-    </table>
-</div>
+        <pre>Pick a player you want to obtain.
+If trade goes well,
+chosen player will switch with your player
+based on position!</pre>
 
-<div>
-    <h3>Available Players</h3>
-    <table>
-        <tr>
-            <th>Position</th>
-            <th>Name</th>
-            <th>Overall</th>
-            <th>Contract</th>
-            <th>Action</th>
-        </tr>
-        <tr th:each="avPlayer : ${availablePlayersToTrade}">
-            <th th:text="${avPlayer.getPosition()}"></th>
-            <th th:text="${avPlayer.getName()}"></th>
-            <th th:text="${avPlayer.getOverall()}"></th>
-            <th th:text="${avPlayer.getContractValue()} + '$'"></th>
-            <th>
-                <form method="post" action="#" th:action="@{/game/trade}">
-                    <input type="number" name="playerId" th:value="${avPlayer.getId()}" hidden>
-                    <button type="submit">Ask For Trade</button>
-                </form>
-            </th>
-        </tr>
-    </table>
-</div>
+        <div class="myTeam">
+            <h3>My Team</h3>
+            <table>
+                <tr>
+                    <th>Position</th>
+                    <th>Name</th>
+                    <th>Overall</th>
+                    <th>Contract</th>
+                </tr>
+                <tr th:each="player : ${myPlayers}">
+                    <th th:text="${player.getPosition()}"></th>
+                    <th th:text="${player.getName()}"></th>
+                    <th th:text="${player.getOverall()}"></th>
+                    <th th:text="${player.getContractValue()} + '$'"></th>
+                </tr>
+            </table>
+        </div>
 
+        <div class="restTeams">
+            <h3>Available Players</h3>
+            <table>
+                <tr>
+                    <th>Position</th>
+                    <th>Name</th>
+                    <th>Overall</th>
+                    <th>Contract</th>
+                    <th>Action</th>
+                </tr>
+                <tr th:each="avPlayer : ${availablePlayersToTrade}">
+                    <th th:text="${avPlayer.getPosition()}"></th>
+                    <th th:text="${avPlayer.getName()}"></th>
+                    <th th:text="${avPlayer.getOverall()}"></th>
+                    <th th:text="${avPlayer.getContractValue()} + '$'"></th>
+                    <th>
+                        <form method="post" action="#" th:action="@{/game/trade}">
+                            <input type="number" name="playerId" th:value="${avPlayer.getId()}" hidden>
+                            <button type="submit">Ask For Trade</button>
+                        </form>
+                    </th>
+                </tr>
+            </table>
+        </div>
 
-<button><a href="/game/team">BACK</a></button>
+        <a href="/game/team">BACK</a>
 
-<div th:replace="template :: foot"></div>
+    </div>
+
+    <div th:replace="template :: foot"></div>
 
 </body>
 </html>

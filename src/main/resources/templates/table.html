@@ -3,15 +3,14 @@
 <head th:replace="template :: header"></head>
 <body>
 
-<div th:replace="template :: nav"></div>
+    <div th:replace="template :: nav"></div>
 
-<h1>table page</h1>
+    <div class="tableContainer">
+        <div th:replace="template :: table"></div>
+        <a href="/game/team">BACK</a>
+    </div>
 
-<div th:replace="template :: table"></div>
-
-<button><a href="/game/team">BACK</a></button>
-
-<div th:replace="template :: footer"></div>
+    <div th:replace="template :: foot"></div>
 
 </body>
 </html>
