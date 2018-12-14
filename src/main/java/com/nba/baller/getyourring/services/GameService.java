@@ -146,6 +146,9 @@ public class GameService {
 		return ringRepo.getTop10Data();
 	}
 
+	private Team getOwnerTeam() {
+		return teamRepo.findById(userTeam.getId()).get();
+	}
 
 	//init all needed items for new player
 
@@ -344,8 +347,8 @@ public class GameService {
 		map.addAttribute("coach", coach);
 		map.addAttribute("city", userTeam.getCity().getName());
 		map.addAttribute("hall", userTeam.getHall().getName());
-		map.addAttribute("wins", userTeam.getWins());
-		map.addAttribute("balance", userTeam.getPlusMinus());
+		map.addAttribute("wins", getOwnerTeam().getWins());
+		map.addAttribute("balance", getOwnerTeam().getPlusMinus());
 		map.addAttribute("matches", nextRoundMatches);
 	}
 
@@ -609,8 +612,6 @@ public class GameService {
 	}
 
 	public void getRingsPageInit(ModelMap map) {
-
-		addRing(owner, userTeam, season);
 
 		List<Ring> ringsByOwner = getRingsByOwner(owner);
 

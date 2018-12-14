@@ -92,4 +92,8 @@ public class Team {
 		this.seasonGamesPlayed = 0;
 		this.plusMinus = 0;
 	}
+
+	public void setPlusMinus(int lastGameDifference) {
+		this.plusMinus += lastGameDifference;
+	}
 }
