@@ -1,55 +1,62 @@
-2019-05-06 21:17:36.661  WARN 6297 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2019-05-06 21:22:29.748  WARN 6776 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2019-05-06 21:25:33.612  WARN 7123 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2019-05-06 21:28:01.553  WARN 7631 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2019-05-06 21:36:10.146  WARN 8277 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2019-05-06 21:42:37.009  WARN 8916 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2019-05-06 21:46:35.090  WARN 9573 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2019-05-06 21:47:22.629  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : getUserTeamInit
-2019-05-06 21:47:22.637  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : updateTeam
-2019-05-06 21:47:22.767  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : 0
-2019-05-06 21:47:22.771  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveMatch
-2019-05-06 21:47:22.793  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveTeam
-2019-05-06 21:47:22.805  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : 0
-2019-05-06 21:47:22.807  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveMatch
-2019-05-06 21:47:22.814  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveTeam
-2019-05-06 21:47:22.818  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : 0
-2019-05-06 21:47:22.820  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveTeam
-2019-05-06 21:47:22.827  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : 0
-2019-05-06 21:47:22.830  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveTeam
-2019-05-06 21:47:22.838  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : 0
-2019-05-06 21:47:22.841  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveMatch
-2019-05-06 21:47:22.851  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveTeam
-2019-05-06 21:47:22.856  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : 0
-2019-05-06 21:47:22.857  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveTeam
-2019-05-06 21:47:42.253  WARN 9573 --- [http-nio-9000-exec-3] c.n.b.getyourring.services.GameService   : saveMatch
-2019-05-06 21:47:42.281  WARN 9573 --- [http-nio-9000-exec-3] c.n.b.getyourring.services.GameService   : saveTeam
-2019-05-06 21:47:42.291  WARN 9573 --- [http-nio-9000-exec-3] c.n.b.getyourring.services.GameService   : saveTeam
-2019-05-06 21:47:42.295  WARN 9573 --- [http-nio-9000-exec-3] c.n.b.getyourring.services.GameService   : saveMatch
-2019-05-06 21:47:42.298  WARN 9573 --- [http-nio-9000-exec-3] c.n.b.getyourring.services.GameService   : saveMatch
-2019-05-06 21:47:42.302  WARN 9573 --- [http-nio-9000-exec-3] c.n.b.getyourring.services.GameService   : saveTeam
-2019-05-06 21:47:42.311  WARN 9573 --- [http-nio-9000-exec-3] c.n.b.getyourring.services.GameService   : saveTeam
-2019-05-06 21:47:42.315  WARN 9573 --- [http-nio-9000-exec-3] c.n.b.getyourring.services.GameService   : saveMatch
-2019-05-06 21:47:42.318  WARN 9573 --- [http-nio-9000-exec-3] c.n.b.getyourring.services.GameService   : saveMatch
-2019-05-06 21:47:42.322  WARN 9573 --- [http-nio-9000-exec-3] c.n.b.getyourring.services.GameService   : saveTeam
-2019-05-06 21:47:42.329  WARN 9573 --- [http-nio-9000-exec-3] c.n.b.getyourring.services.GameService   : saveTeam
-2019-05-06 21:47:42.332  WARN 9573 --- [http-nio-9000-exec-3] c.n.b.getyourring.services.GameService   : saveMatch
-2019-05-06 21:48:31.711  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : finishRoundInit
-2019-05-06 21:48:31.751  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : 4
-2019-05-06 21:48:31.753  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveMatch
-2019-05-06 21:48:31.773  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveTeam
-2019-05-06 21:48:31.778  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : 4
-2019-05-06 21:48:31.780  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveTeam
-2019-05-06 21:48:31.784  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : 4
-2019-05-06 21:48:31.785  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveMatch
-2019-05-06 21:48:31.797  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveTeam
-2019-05-06 21:48:31.801  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : 5
-2019-05-06 21:48:31.803  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveMatch
-2019-05-06 21:48:31.806  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveTeam
-2019-05-06 21:48:31.814  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : 5
-2019-05-06 21:48:31.815  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveTeam
-2019-05-06 21:48:31.819  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : 5
-2019-05-06 21:48:31.821  WARN 9573 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveTeam
-2019-05-06 22:03:44.269  WARN 10918 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2019-05-06 22:11:59.784  WARN 11618 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2019-05-06 22:12:22.308  WARN 11697 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-05-21 17:19:46.338  WARN 28845 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-05-21 17:20:03.484  WARN 28918 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-05-21 17:20:20.016  WARN 28918 --- [http-nio-9000-exec-4] c.n.b.getyourring.services.GameService   : getUserTeamInit
+2019-05-21 17:20:20.017  WARN 28918 --- [http-nio-9000-exec-4] c.n.b.getyourring.services.GameService   : updateTeam
+2019-05-21 17:20:20.156  WARN 28918 --- [http-nio-9000-exec-4] c.n.b.getyourring.services.GameService   : 0
+2019-05-21 17:20:20.159  WARN 28918 --- [http-nio-9000-exec-4] c.n.b.getyourring.services.GameService   : saveMatch
+2019-05-21 17:20:20.181  WARN 28918 --- [http-nio-9000-exec-4] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:20.197  WARN 28918 --- [http-nio-9000-exec-4] c.n.b.getyourring.services.GameService   : 0
+2019-05-21 17:20:20.202  WARN 28918 --- [http-nio-9000-exec-4] c.n.b.getyourring.services.GameService   : saveMatch
+2019-05-21 17:20:20.208  WARN 28918 --- [http-nio-9000-exec-4] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:20.212  WARN 28918 --- [http-nio-9000-exec-4] c.n.b.getyourring.services.GameService   : 0
+2019-05-21 17:20:20.214  WARN 28918 --- [http-nio-9000-exec-4] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:20.224  WARN 28918 --- [http-nio-9000-exec-4] c.n.b.getyourring.services.GameService   : 0
+2019-05-21 17:20:20.226  WARN 28918 --- [http-nio-9000-exec-4] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:20.233  WARN 28918 --- [http-nio-9000-exec-4] c.n.b.getyourring.services.GameService   : 0
+2019-05-21 17:20:20.237  WARN 28918 --- [http-nio-9000-exec-4] c.n.b.getyourring.services.GameService   : saveMatch
+2019-05-21 17:20:20.243  WARN 28918 --- [http-nio-9000-exec-4] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:20.247  WARN 28918 --- [http-nio-9000-exec-4] c.n.b.getyourring.services.GameService   : 0
+2019-05-21 17:20:20.251  WARN 28918 --- [http-nio-9000-exec-4] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:25.536  WARN 28918 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveMatch
+2019-05-21 17:20:25.587  WARN 28918 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:25.615  WARN 28918 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:25.622  WARN 28918 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveMatch
+2019-05-21 17:20:25.625  WARN 28918 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveMatch
+2019-05-21 17:20:25.632  WARN 28918 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:25.642  WARN 28918 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:25.649  WARN 28918 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveMatch
+2019-05-21 17:20:25.653  WARN 28918 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveMatch
+2019-05-21 17:20:25.659  WARN 28918 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:25.670  WARN 28918 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:25.675  WARN 28918 --- [http-nio-9000-exec-2] c.n.b.getyourring.services.GameService   : saveMatch
+2019-05-21 17:20:33.716  WARN 28918 --- [http-nio-9000-exec-1] c.n.b.getyourring.services.GameService   : finishRoundInit
+2019-05-21 17:20:33.762  WARN 28918 --- [http-nio-9000-exec-1] c.n.b.getyourring.services.GameService   : 4
+2019-05-21 17:20:33.765  WARN 28918 --- [http-nio-9000-exec-1] c.n.b.getyourring.services.GameService   : saveMatch
+2019-05-21 17:20:33.796  WARN 28918 --- [http-nio-9000-exec-1] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:33.801  WARN 28918 --- [http-nio-9000-exec-1] c.n.b.getyourring.services.GameService   : 5
+2019-05-21 17:20:33.804  WARN 28918 --- [http-nio-9000-exec-1] c.n.b.getyourring.services.GameService   : saveMatch
+2019-05-21 17:20:33.821  WARN 28918 --- [http-nio-9000-exec-1] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:33.825  WARN 28918 --- [http-nio-9000-exec-1] c.n.b.getyourring.services.GameService   : 4
+2019-05-21 17:20:33.827  WARN 28918 --- [http-nio-9000-exec-1] c.n.b.getyourring.services.GameService   : saveMatch
+2019-05-21 17:20:33.833  WARN 28918 --- [http-nio-9000-exec-1] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:33.839  WARN 28918 --- [http-nio-9000-exec-1] c.n.b.getyourring.services.GameService   : 4
+2019-05-21 17:20:33.842  WARN 28918 --- [http-nio-9000-exec-1] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:33.846  WARN 28918 --- [http-nio-9000-exec-1] c.n.b.getyourring.services.GameService   : 5
+2019-05-21 17:20:33.849  WARN 28918 --- [http-nio-9000-exec-1] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:33.853  WARN 28918 --- [http-nio-9000-exec-1] c.n.b.getyourring.services.GameService   : 5
+2019-05-21 17:20:33.855  WARN 28918 --- [http-nio-9000-exec-1] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:41.090  WARN 28918 --- [http-nio-9000-exec-6] c.n.b.getyourring.services.GameService   : founded expecting games after log in 
+2019-05-21 17:20:41.090  WARN 28918 --- [http-nio-9000-exec-6] c.n.b.getyourring.services.GameService   : founded expecting games after log in 
+2019-05-21 17:20:41.090  WARN 28918 --- [http-nio-9000-exec-6] c.n.b.getyourring.services.GameService   : founded expecting games after log in 
+2019-05-21 17:20:41.090  WARN 28918 --- [http-nio-9000-exec-6] c.n.b.getyourring.services.GameService   : 5
+2019-05-21 17:20:41.092  WARN 28918 --- [http-nio-9000-exec-6] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:41.096  WARN 28918 --- [http-nio-9000-exec-6] c.n.b.getyourring.services.GameService   : 3
+2019-05-21 17:20:41.100  WARN 28918 --- [http-nio-9000-exec-6] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:41.106  WARN 28918 --- [http-nio-9000-exec-6] c.n.b.getyourring.services.GameService   : 4
+2019-05-21 17:20:41.108  WARN 28918 --- [http-nio-9000-exec-6] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:41.111  WARN 28918 --- [http-nio-9000-exec-6] c.n.b.getyourring.services.GameService   : 5
+2019-05-21 17:20:41.114  WARN 28918 --- [http-nio-9000-exec-6] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:41.124  WARN 28918 --- [http-nio-9000-exec-6] c.n.b.getyourring.services.GameService   : 3
+2019-05-21 17:20:41.126  WARN 28918 --- [http-nio-9000-exec-6] c.n.b.getyourring.services.GameService   : saveTeam
+2019-05-21 17:20:41.132  WARN 28918 --- [http-nio-9000-exec-6] c.n.b.getyourring.services.GameService   : 4
+2019-05-21 17:20:41.135  WARN 28918 --- [http-nio-9000-exec-6] c.n.b.getyourring.services.GameService   : saveTeam
