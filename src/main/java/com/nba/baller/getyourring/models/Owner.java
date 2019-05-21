@@ -37,6 +37,9 @@ public class Owner {
 		this.username = username;
 		this.password = passwordEncoder().encode(password);
 		this.email = email;
+		if (username == null || password == null || email == null) {
+			throw new NullPointerException("input can't be null");
+		}
 	}
 
 	public void setEncodedPassword() {

@@ -23,7 +23,7 @@ public class GetYourRingApplication {
 	public CommandLineRunner demo() {
 		return (args) -> {
 
-			Owner admin = new Owner("ziemo", "1212", "andrzejewski.ziemowit@gmail.com");
+			Owner admin = new Owner("ziemo", "password", "andrzejewski.ziemowit@gmail.com");
 			userService.saveAdmin(admin);
 		};
 	}

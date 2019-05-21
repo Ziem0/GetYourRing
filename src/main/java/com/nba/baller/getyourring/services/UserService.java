@@ -97,7 +97,6 @@ public class UserService {
 	}
 
 
-
 //sessionId != primaryId
 //off
 //HttpSession only for Owner's purposes; not check if session expired; responsible for that is SpringSecurity

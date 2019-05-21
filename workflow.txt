@@ -1,0 +1,191 @@
+
+'DATABA SE:'
+-team
+    -userId fk
+    -owner boolean
+    -id pk
+    -name
+    -players fk
+    -coach fk
+    -hall fk
+    -city fk
+    -wins
+    -+-   --> needed if no playoffs
+-player
+    -id
+    -name
+    -position
+    -team
+    -overall  (change after each game)
+    -contract (per year)
+-coach
+    -id
+    -name
+    -boost (random value (+-) for random player before each game (user doesnt know))
+    -add-time special value
+    -team
+-hall
+    -name
+    -team
+-city
+    -name
+    -team
+-match
+    -id
+    -date
+    -team1
+    -team2
+    -team1 value
+    -team2 value
+-user
+    # -id
+    -nick
+    -password
+    -email
+    -rings
+-ring
+    -id
+    -data
+    -match fk
+
+'VIEW:'
+-welcome/login page
+    -use security
+    -admin
+        -check users
+        -remove users (ban)
+        -view users statistics
+    -user
+        -create account --> choose team
+        -load account
+        -log out
+-introduction/rules
+-team page -> city background
+    -players
+    -coach name
+    -city name
+    -hall name
+    -trade
+    -table
+-match page -> hall background
+    -calculate all matches one by one
+    -see all players overall
+    -see coaches and secret boost
+    -start sim match (5 parts)
+-trade page
+    -choose random team to trade (1 choice per round)
+    -left right squads view
+    -trade
+-table page
+    -name
+    -wins
+    -+-
+-season award
+    -winners and loosers
+-top10 users by ring
+    -name
+    -amount of rings
+
+'TECHNICS':
+-security
+-database
+-jpa hibernate
+-jpql
+-thymeleaf
+-css
+-rest api
+-SOLID
+-IoC DIP DI
+-reflection annotation
+-session and cookie (login and others)
+-logs
+-singleton
+-testing
+
+================================================================================
+score mechanics
+player skill 1-5 each value * max 6
+so:
+1 - 3   6-18
+5 - 4   30-24    if difference is more then 6 then random point boost for random team (6-12)  -> crowd factor
+2 - 3   12-18
+4 - 3   24-18
+3 - 2   18-12
+        -----
+        90-90
++coach booster for player overall (+1 if not 5)             it goes first before final part score calculation
+# +random injury which reduce player overall (-1 if not 1)    it goes first before final part score calculation
+----
+TRADE
+overall               2 - 5   5 - 2
+contract              2 - 5   5 - 2
+
+salary cup left      10 - 10  7 - 12
+
+================================================================================
+Golden State Warriors
+    -Steph Curry
+    -Klay Thompson
+    -Kevin Durant
+    -Draymond Green
+    -Demarcus Cousins
+Houston Rockets
+    -James Harden
+    -Chris Paul
+    -Eric Gordon
+    -Gerald Green
+    -Clint Capela
+LAL
+    -Lonzo Ball
+    -Kyle Kuzma
+    -Brandon Ingram
+    -Lebron James
+    -Javale McGee
+Utah Jazz
+    -Ricky Rubio
+    -Donovan Mitchell
+    -Joe Ingles
+    -Jae Crowder
+    -Rudy Gobert
+Boston Celtics
+    -Kyrie Irving
+    -Jason Tatum
+    -Jaylen Brown
+    -Gordon Hayward
+    -Al Horford
+============================
+flyway with data or by CommandLineRunner
+security
+service one for all repositories
+repositories's manual functions
+controllers
+-----------------------------
+TODO:
+1.logowanie z security, session
+2.flyway and session config
+
+3.service(s) (resource interface)
+4.logowanie:
+    -new owner:
+        -create new database content
+            -owner
+            -teams itd
+    -load owner based on login:
+        -retrieval with database myTeam and create /game app
+5.business logic with update and create entity in databse
+6.html css
+7.Bear in mind:
+    -SOLID
+    -IoC DIP DI
+    -reflection annotation
+    -testing
+---------------------------------------------------------------------------------------------
+flow:
+any -> home -> login
+            -> register -> login -> gameApp
+            -> admin login -> restApi
+                            -----------------
+                            logout
+---------------------------------------------------------------------------------------------
+controller -> list [id for battles and id for summaries]
+list add to script as var

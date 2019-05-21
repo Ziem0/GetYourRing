@@ -13,14 +13,13 @@
 
         <div class="options">
             <div th:if="${tradesCounter}!=2">
-                <a href="/game/trade"><img src="/static/images/tradeBtn.png" alt="btnTrade" title="trade player!"></a>
+                <a href="/game/trade"><img th:src="@{/images/tradeBtn.png}" alt="btnTrade" title="trade player!"></a>
             </div>
-            <a href="/game/table"><img src="/static/images/tableBtn.png" alt="btnTable" title="check table!"></a>
-            <a class="ball" href="/game/matches"><img src="/static/images/matchBtn.png" alt="btnMatch" title="play games!"></a>
-            <a href="/game/rings"><img src="/static/images/ringBtn.png" alt="btnRings" title="check won rings!"></a>
+            <a href="/game/table"><img th:src="@{/images/tableBtn.png}" alt="btnTable" title="check table!"></a>
+            <a class="ball" href="/game/matches"><img th:src="@{/images/matchBtn.png}" alt="btnMatch" title="play games!"></a>
+            <a href="/game/rings"><img th:src="@{/images/ringBtn.png}" alt="btnRings" title="check won rings!"></a>
         </div>
-
-        <img class="cityPan" th:src="'../static/images/'+${cityPath}">
+        <img class="cityPan" th:src="@{'/images/'+${cityPath}}">
 
         <div class="squad">
             <h3>Your actual squad:</h3>

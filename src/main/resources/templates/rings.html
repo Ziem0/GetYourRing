@@ -7,7 +7,7 @@
 
     <div class="ringsContainer">
         
-        <img th:src="'../static/images/'+${ringPath}">
+        <img th:src="@{'/images/'+${ringPath}}">
         
         <div th:if="${isAnyRing} == false">
             <h3>You have no rings so far!</h3>

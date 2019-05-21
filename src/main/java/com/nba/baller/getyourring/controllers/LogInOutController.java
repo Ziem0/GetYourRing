@@ -49,7 +49,6 @@ public class LogInOutController {
 	}
 
 
-
 	//create account and redirect to login page
 	@GetMapping("/create")
 	public String createAccount(@ModelAttribute Owner owner) {
@@ -74,10 +73,5 @@ public class LogInOutController {
 
 		return "login";
 	}
-
-//	@GetMapping("/logout")
-//	public String logoutProcess() {
-//		return "logout";
-//	}
 
 }

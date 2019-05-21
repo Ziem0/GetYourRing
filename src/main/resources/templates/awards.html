@@ -13,9 +13,9 @@
             <h3 th:text="${third}">3rd</h3>
         </div>
 
-        <img src="../static/images/podium.png">
+        <img th:src="@{/images/podium.png}">
 
-        <img th:src="'https://nba-players.herokuapp.com/players/'+ ${lastName}+'/'+${firstName}">
+        <img th:src="@{'https://nba-players.herokuapp.com/players/'+ ${lastName}+'/'+${firstName}}">
 
         <table>
             <tr>

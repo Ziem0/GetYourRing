@@ -1,16 +1,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="header">
     <title th:text="${title}"></title>
-    <link th:href="@{/static/css/styles.css}" rel="stylesheet"/>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 
 
 <div class="welcomeNav" th:fragment="welcomeNav">
-    <img src="/static/images/ban.jpeg" alt="welcome">
-    <img src="/static/images/welcome.jpeg" alt="welcome">
-    <img src="/static/images/welcome3.jpeg" alt="welcome">
+    <img th:src="@{/images/ban.jpeg}" alt="welcome">
+    <img th:src="@{/images/welcome.jpeg}" alt="welcome">
+    <img th:src="@{/images/welcome3.jpeg}" alt="welcome">
     <h1>Get Your Ring!</h1>
 </div>
 

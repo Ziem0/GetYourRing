@@ -27,7 +27,6 @@ public class GameController {
 		this.gameService = gameService;
 	}
 
-
 	/**
 	 * responsible for:
 	 * -setting class fields
@@ -258,12 +257,3 @@ public class GameController {
 	}
 
 }
-
-//todo:
-//refactor .html
-//need static content reader!
-//css
-
-//team flag for new round connected with logout
-
-//check when set next round during init game (intro?)

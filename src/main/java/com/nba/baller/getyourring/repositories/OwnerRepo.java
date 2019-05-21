@@ -12,6 +12,4 @@ public interface OwnerRepo extends CrudRepository<Owner, String> {
 	@Query(value = "select o from Owner o where o.username= :deliveredUsername")
 	Owner getOwnerByName(@Param("deliveredUsername") String deliveredUsername);
 
-
-
 }

@@ -298,7 +298,6 @@ public class GameService {
 		} else {
 			setTeamForOldUser();
 			setNextRoundMatches();
-
 		}
 	}
 
